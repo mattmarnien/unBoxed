@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{{!-- general page styling handlebars --}}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    {{!-- materialize css and our custom css --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> 
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <title>unBoxed</title>
+</head>
+
+<body>
+{{!-- main nav bar --}}
+ <nav>
+     <nav>
+    <div class="nav-wrapper blue-grey darken-2" id="mainNav">
+      <a href='#' data-target="mobileNav" class="sidenav-trigger"><i
+          class="fas fa-chess-rook fa-4x mobileIcon"></i></a>
+      <a href="#" class="brand-logo center"><img src="images/unBoxedLogo2.png" alt="unBoxed Logo" id="mainLogo"></a>
+      <ul id="mainNavLinks" class="right hide-on-med-and-down navLinks">
+        <li><a class="navLinks" href="sass.html">Sass</a></li>
+        <li><a class="navLinks" href="badges.html">Components</a></li>
+        <li><a class="navLinks" href="collapsible.html">JavaScript</a></li>
+      </ul>
+    </div>
+  </nav>
+{{!-- mobile only nav --}}
+  <ul class="sidenav" id="mobileNav">
+    <li><a href="sass.html">Sass</a></li>
+    <li><a href="badges.html">Components</a></li>
+    <li><a href="collapsible.html">Javascript</a></li>
+    <li><a href="mobile.html">Mobile</a></li>
+  </ul>
+        
+
+
+
+
+    {{{body}}}
+
+
+  
+
+   
+
+
+  
+
+{{!-- materialize js, fontawesome, and our js linked --}}
+<script src="https://kit.fontawesome.com/bf437d7780.js" crossorigin="anonymous"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>            
+<script src="/assets/js/script.js"></script>
+</body>
+
+</html>

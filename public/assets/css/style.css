@@ -1,0 +1,40 @@
+/* Custom CSS */
+body {
+    background-color: silver;
+}
+
+#mainNav{
+    height: 70px;
+   
+}
+
+#mainLogo {
+    height: 93px;
+}
+
+.navLinks{
+    font-size: large;  
+    color: white;
+}
+
+.mobileIcon {
+    margin-left: 10px;
+    color: #98da9e;
+}
+
+.input-field label {
+    color: #000;
+    
+  }
+.input-field input[type=text]:focus + label {
+    color: #70a3b7 !important;    
+  }
+
+  .input-field input[type=text]:focus {
+    border-bottom: 1px solid #70a3b7 !important;
+    box-shadow: 0 1px 0 0 #70a3b7 !important;
+  }
+
+  #loginBtn{
+    background-color:  #87c58c;
+  }
