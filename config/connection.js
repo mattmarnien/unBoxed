@@ -2,8 +2,7 @@
 var mysql = require("mysql");
 require("dotenv").config();
 
-
-if(process.env.JAWSDB_URL) {
+if (process.env.JAWSDB_URL) {
   // Heroku MySQL (JawsDB)
   connection = mysql.createConnection(process.env.JAWSDB_URL);
 } else {
@@ -13,10 +12,9 @@ if(process.env.JAWSDB_URL) {
     port: 3306,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
-    database: "watchtheshowdb"
+    database: "unBoxedDB"
   });
 }
-
 
 // Make connection.
 connection.connect(function(err) {
