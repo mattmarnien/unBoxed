@@ -82,8 +82,15 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: true
         },
+       
     });
+    Game.associate = function(models){
+        Game.belongsToMany(models.User, {through: 'User_Games'})
+      }
     connection.sync()
     return Game;
 
 };
+
+
+    
