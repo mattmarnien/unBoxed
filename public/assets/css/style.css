@@ -21,6 +21,9 @@ body {
     margin-left: 10px;
     color: #98da9e;
 }
+.cardText{
+  color: black;
+}
 
 .input-field label {
     color: #000;
@@ -29,10 +32,70 @@ body {
 .input-field input[type=text]:focus + label {
     color: #70a3b7 !important;    
   }
+  .input-field input[type=password]:focus + label {
+    color: #70a3b7 !important;    
+  }
+  .input-field input[type=email]:focus + label {
+    color: #70a3b7 !important;    
+  }
+  
+  .input-field input[type=text] {
+    border-bottom: 1px solid #494848 !important;
+  }
+  .input-field input[type=password] {
+    border-bottom: 1px solid #494848 !important;
+  }
+  .input-field input[type=email] {
+    border-bottom: 1px solid #494848 !important;
+  }
 
   .input-field input[type=text]:focus {
     border-bottom: 1px solid #70a3b7 !important;
-    box-shadow: 0 1px 0 0 #70a3b7 !important;
+  }
+  
+  .input-field input[type=password]:focus {
+    border-bottom: 1px solid #70a3b7 !important;
+  }
+  .input-field input[type=email]:focus {
+    border-bottom: 1px solid #70a3b7 !important;
+  }
+
+  .signup label {
+    color: #000;
+    
+  }
+  .signup input[type=text]:focus + label {
+    color: #70a3b7 !important;    
+  }
+  .signup input[type=email]:focus + label {
+    color: #70a3b7 !important;    
+  }
+  .signup input[type=password]:focus + label {
+    color: #70a3b7 !important;    
+  }
+  .signup input[type=text] {
+    border-bottom: 1px solid #494848 !important;
+  
+  }
+  .signup input[type=email] {
+    border-bottom: 1px solid #494848 !important;
+ 
+  }
+  .signup input[type=password] {
+    border-bottom: 1px solid #494848 !important;
+   
+  }
+  .signup input[type=text]:focus {
+    border-bottom: 1px solid #70a3b7 !important;
+   
+  }
+  .signup input[type=email]:focus {
+    border-bottom: 1px solid #70a3b7 !important;
+  
+  }
+  .signup input[type=password]:focus {
+    border-bottom: 1px solid #70a3b7 !important;
+
   }
 
   #loginBtn{
