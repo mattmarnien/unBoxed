@@ -1,6 +1,7 @@
 /* Custom CSS */
 body {
     background-color: silver;
+    font-family: 'Maven Pro', sans-serif;
 }
 
 #mainNav{
@@ -21,7 +22,7 @@ body {
     margin-left: 10px;
     color: #98da9e;
 }
-.cardText{
+.card{
   color: black;
 }
 
@@ -101,3 +102,39 @@ body {
   #loginBtn{
     background-color:  #87c58c;
   }
+
+  .cardText{
+    font-size: medium;
+  }
+
+  .gameCard {
+    background-color: #70a3b7;
+    color: white;
+    line-height: 1.5;
+
+  }
+
+  .gameAddButton{
+    background-color: #87c58c ;
+  }
+  .gameAddButton:hover {
+    background-color: #70a3b7 ;
+  }
+
+  @media (max-width: 576px){
+   
+   
+    .cardTitle{
+        font-size: medium !important;
+        font-weight: bold;
+    }
+
+    .cardText{
+      font-size: small;
+    }
+
+    .gameAddButton{
+      font-size: small;
+    }
+
+}

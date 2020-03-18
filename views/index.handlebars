@@ -3,41 +3,47 @@
 
 {{!-- main content --}}
 <div class='container'>
-    <br>
-    <div class='row'>
-        
-        <div class='col s8 offset-s2'>
-            <h6 class="center">Take your gaming out of the box.</h6>
+  <br>
+  <div class='row'>
 
-            <div class='row'>
-              <form id="gameSearchForm">
-                <div class="input-field col s12">
-          <input placeholder="Search for a game" id="gameSearchInput" type="text" class="validate">
-         
-        </div>
-              </form>
+    <div class='col s12'>
+      <h6 class="center">Take your gaming out of the box.</h6>
+
+      <div class='row'>
+        <form id="gameSearchForm">
+          <div class="input-field col s8 offset-s2">
+            <input placeholder="Search for a game" id="gameSearchInput" type="text" class="validate">
+
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col s10 offset-s1">
+          {{#each games}}
+          <div class="card">
+            <div class="card-image">
+              <img src="{{this.dataValues.image_url}}">
             </div>
-             <div class="row">
-    <div class="col s12">
-      {{#each games}}
-      <div class="card">
-        <div class="card-image">        
-          <img src="{{this.dataValues.image_url}}">
-        </div>
-        <div class="card-content">
-          <h4 class='cardText'>{{this.dataValues.names}}</h4>
-        </div>
-        <div class="card-action">
-         
+            <div class="card-content">
+              <h4 class='cardTitle'>{{this.dataValues.names}}</h4> <span
+                class='cardText'>{{this.dataValues.min_players}} - {{this.dataValues.max_players}} players</span>
+              <p class='cardText flow-text'>Category: {{this.dataValues.category}}</p>
+              <div class='row'>
+                <button class='btn blue darken-2 gameAddButton col s3' data-id="{{this.dataValues.id}}"><i
+                    class="fas fa-plus-circle"></i> Add</button>
+                <a href="/games/{{this.dataValues.id}}"><button class='btn green darken-2 toGamePage col s3 offset-s6' data-id="{{this.dataValues.id}}"><i
+                    class="fas fa-puzzle-piece"></i> See game page</button></a>
+
+              </div>
+
+            </div>
+          </div>
+          {{/each}}
         </div>
       </div>
-      {{/each}}
-    </div>
-  </div>
-  
-        </div>
-       
 
     </div>
+
+
+  </div>
 </div>
-{{!-- image card layout --}}
