@@ -16,7 +16,6 @@ router.get("/", (req,res) => {
     };
     res.render("index", allGamesObject);
     // res.json(allGamesObject);
-    console.log(allGamesObject);
   });
 });
 
@@ -45,6 +44,14 @@ router.post("/search", (req, res) => {
     };
     res.render("index", gameObject);
   });
+})
+
+router.get("/games/:id", (req, res) => {
+  console.log(req.params.id)
+  db.Game.findOne({where: {id: req.params.id}}).then( data => {
+    console.log(data);
+    res.render("gamePage", data)
+  })
 })
 
 router.get("/login", (req, res) => {
