@@ -1,5 +1,25 @@
 // Front end script
 
+//////////
+//Index Script
+///
+
+const gameSearch = $("#gameSearchInput");
+const gameSearchForm = $("#gameSearchForm");
+
+gameSearchForm.on("submit", event =>{
+  event.preventDefault();
+  let search = gameSearch.val().trim()
+  $.ajax({
+    method: "POST",
+    url: "/search",
+    data: {name: search}
+  }).then( () => {
+
+  })
+  
+
+})
 
 
 /////////

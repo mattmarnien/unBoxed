@@ -4,15 +4,15 @@ module.exports = function (sequelize, DataTypes) {
         // Giving the Author model a name of type STRING
         ranks: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         bgg_url: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         game_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         names: {
             type: DataTypes.STRING,
@@ -20,47 +20,47 @@ module.exports = function (sequelize, DataTypes) {
         },
         min_players: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         max_players: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         avg_time: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         min_time: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         max_time: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         year: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         avg_rating: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         geek_rating: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         num_votes: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         image_url: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         age: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         mechanic: {
             type: DataTypes.STRING,
@@ -68,7 +68,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         owned: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         category: {
             type: DataTypes.STRING,
@@ -82,12 +82,20 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: true
         },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        }
        
     });
     Game.associate = function(models){
         Game.belongsToMany(models.User, {through: 'User_Games'})
       }
-    connection.sync()
+   
     return Game;
 
 };

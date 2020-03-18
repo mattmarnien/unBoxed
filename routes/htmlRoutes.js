@@ -16,7 +16,7 @@ router.get("/", (req,res) => {
     };
     res.render("index", allGamesObject);
     // res.json(allGamesObject);
-    // console.log(allGamesObject);
+    console.log(allGamesObject);
   });
 });
 
@@ -32,6 +32,20 @@ router.get("/popular", (req, res) => {
   });
 
 });
+
+router.post("/search", (req, res) => {
+  console.log(req.body);
+  db.Game.findOne({where: {
+    names: req.body.name
+  }}).then(data => {
+    console.log(data)
+    
+    let gameObject = {
+      games: data  
+    };
+    res.render("index", gameObject);
+  });
+})
 
 router.get("/login", (req, res) => {
   res.render("login");
