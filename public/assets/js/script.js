@@ -6,97 +6,55 @@
 
 const gameSearch = $("#gameSearchInput");
 const gameSearchForm = $("#gameSearchForm");
-const gameAddButton =$();
+const gameAddButton = $();
 const gamePageButton = $(".toGamePage");
 
-gameSearchForm.on("submit", event =>{
+gameSearchForm.on("submit", event => {
   event.preventDefault();
   let search = gameSearch.val().trim()
   $.ajax({
     method: "POST",
     url: "/search",
-    data: {name: search}
-  }).then( () => {
+    data: { name: search }
+  }).then(() => {
 
   })
-  
+
 
 })
 
 //////////
 //Game Page Script
 ///
-const gameReview = $(".gameReviewLink");
 const redditComments = $(".redditCommentLink");
+const description = $(".descriptionLink")
 
-function generateReviewDiv(data){
-  let newDiv = $("<div class='reviewBox'>");
-  for(let i = 0; i< 5; i++) {
-    let reviewDiv = $("<div>")
+function generateDescription(data) {
+  let newDiv = $("<div class='gameExtraInfo'>");
+    let descriptionDiv = $("<div>")
     let newH6 = $("<h6>");
-    let newP = $("<p>");
-    if(data.reviews[i].title){
-    newH6.text("Title" + data.reviews[i].title + "Rating: " + data.reviews[i].rating)
-    }
-    else{
-      newH6.text("Rating: " + data.reviews[i].rating)
-    }
-    newP.text(data.reviews[i].description);
-    newDiv.append(reviewDiv);
-    reviewDiv.append(newH6, newP);
-  }
-
+    newH6.text("Description: ")
+    newDiv.append(descriptionDiv);
+    descriptionDiv.append(newH6, data.games[0].description_preview);
   $("#infoDiv").append(newDiv);
-
 }
-function generateRedditDiv(data){
-  let newDiv = $("<div class='reviewBox'>");
-  for(let i = 0; i< 1; i++) {
+
+function generateRedditDiv(data) {
+  let newDiv = $("<div class='gameExtraInfo'>");
+  for (let i = 0; i < 5; i++) {
     let redditDiv = $("<div>")
-    let newH6 = $("<h6>");
-    let newP = $("<p>");
-    
-    newH6.text(data.reddit_comments[i].title)
-    
-   
-    newP.text(data.reddit_comments[i].body);
+    let newH4 = $("<h4>");
+    newH4.text(data.reddit_comments[i].title)
     newDiv.append(redditDiv);
-    redditDiv.append(newH6, data.reddit_comments[i].body);
+    redditDiv.append(newH4, data.reddit_comments[i].body);
   }
-
   $("#infoDiv").append(newDiv);
-
 }
 
-gameReview.on("click", function(event){
+redditComments.on("click", function (event) {
   let name = $(this).data('name');
   let queryUrl = "https://www.boardgameatlas.com/api/search?name=" + name + "&client_id=nmzLLgP0nr"
   $("#infoDiv").empty();
-
-  $.ajax({
-    method: "GET",
-    url: queryUrl
-  }).then(data => {
-    console.log(data)
-    queryUrl = "https://www.boardgameatlas.com/api/reviews?&description_required&game_id=" + data.games[0].id + "&client_id=nmzLLgP0nr"
-    $.ajax({
-      method: "GET",
-      url: queryUrl
-    }).then(moreData => {
-      generateReviewDiv(moreData)
-      console.log(moreData);
-    })
-    
-    
-
-  })
-})
-
-redditComments.on("click", function(event){
-  let name = $(this).data('name');
-  let queryUrl = "https://www.boardgameatlas.com/api/search?name=" + name + "&client_id=nmzLLgP0nr"
-  $("#infoDiv").empty();
-
   $.ajax({
     method: "GET",
     url: queryUrl
@@ -107,16 +65,26 @@ redditComments.on("click", function(event){
       method: "GET",
       url: queryUrl
     }).then(moreData => {
-    generateRedditDiv(moreData)
+      generateRedditDiv(moreData)
       console.log(moreData);
     })
-    
-    
-
   })
 })
 
-
+description.on("click", function (event) {
+  console.log("click")
+  let name = $(this).data('name');
+  let queryUrl = "https://www.boardgameatlas.com/api/search?name=" + name + "&client_id=nmzLLgP0nr"
+  $("#infoDiv").empty();
+  $.ajax({
+    method: "GET",
+    url: queryUrl
+  }).then(data => {
+    console.log(data)
+    generateDescription(data)
+    
+  })
+})
 
 
 /////////
@@ -138,8 +106,8 @@ function getUserInfo() {
     lastname: signUpLastname.val().trim(),
     username: signUpUsername.val().trim(),
     password: signUpPassword.val().trim(),
-};
-return user;
+  };
+  return user;
 }
 
 signUpForm.on("submit", event => {
@@ -147,18 +115,18 @@ signUpForm.on("submit", event => {
 })
 signUpButton.on("click", event => {
   event.preventDefault();
-if(signUpPassword.val().trim() === signUpConfirmPassword.val().trim()){
-  let newUser = getUserInfo();
-  console.log(newUser);
-  $.ajax({
-    method: "POST",
-    url: "/api/users",
-    data: newUser
-  }).then( () => {
-    console.log(newUser.firstname + " " + newUser.lastname + " has been added to the database.")
-  })
+  if (signUpPassword.val().trim() === signUpConfirmPassword.val().trim()) {
+    let newUser = getUserInfo();
+    console.log(newUser);
+    $.ajax({
+      method: "POST",
+      url: "/api/users",
+      data: newUser
+    }).then(() => {
+      console.log(newUser.firstname + " " + newUser.lastname + " has been added to the database.")
+    })
   }
-  else{
+  else {
     console.log("Passwords do not match!")
   }
 })
@@ -168,20 +136,17 @@ if(signUpPassword.val().trim() === signUpConfirmPassword.val().trim()){
 ////
 const addButton = $(".addGameButton");
 
-addButton.on("click", function(event){
+addButton.on("click", function (event) {
   game = $(this).data('id');
   $.ajax({
     method: "POST",
     url: "/api/users/:id",
     data: game
-  }).then( () => {
-    
+  }).then(() => {
+
   })
 
 })
-
-
-
 
 /////////////
 //Materialize Scripts
@@ -189,6 +154,6 @@ addButton.on("click", function(event){
 
 // Materialize event listener for side-nav on mobile;
 document.addEventListener('DOMContentLoaded', function () {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems);
-  });
+  var elems = document.querySelectorAll('.sidenav');
+  var instances = M.Sidenav.init(elems);
+});
