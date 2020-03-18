@@ -15,7 +15,7 @@ router.get("/", (req,res) => {
   
     };
     res.render("index", allGamesObject);
-    // res.json(allGamesObject);
+
   });
 });
 
@@ -50,7 +50,7 @@ router.get("/games/:id", (req, res) => {
   console.log(req.params.id)
   db.Game.findOne({where: {id: req.params.id}}).then( data => {
     console.log(data);
-    res.render("gamePage", data)
+    res.render("game", data)
   })
 })
 
@@ -62,9 +62,11 @@ router.get("/signup", (req,res) => {
   res.render("signUp");
 })
 
-router.get("/user/id:", async (req,res) => {
-  let thisUser = await User.findOne({where: {id: req.params.id}});
-  res.render("userHome", thisUser);
+router.get("/user/:id", async (req,res) => {
+  db.User.findOne({where: {id: req.params.id}}).then(thisUser => {
+    res.render("user", thisUser);
+  });
+ 
 });
 
 

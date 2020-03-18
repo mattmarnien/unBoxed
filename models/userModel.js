@@ -27,13 +27,22 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         
     }, 
-    createdAt: {
+    location: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    onlineGaming: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
+      default: true
+    },
+    createdAt: {
+      allowNull: true,
       type: DataTypes.DATE,
      default: moment.now()
     },
     updatedAt:{
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.DATE,
      default: moment.now()
     }

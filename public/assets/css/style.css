@@ -1,125 +1,127 @@
 /* Custom CSS */
+/* global tweaks */
 body {
     background-color: silver;
     font-family: 'Maven Pro', sans-serif;
 }
-
+/* main styling */
 #mainNav{
-    height: 70px;
-   
+    height: 70px;  
 }
-
 #mainLogo {
     height: 93px;
 }
-
 .navLinks{
     font-size: large;  
     color: white;
 }
-
 .mobileIcon {
     margin-left: 10px;
     color: #98da9e;
 }
+
+/* Index styling */
 .card{
   color: black;
 }
+.cardText{
+  font-size: medium;
+}
+.gameAddButton{
+  background-color: #87c58c ;
+}
+.gameAddButton:hover {
+  background-color: #70a3b7 ;
+}
+.toGamePage{
+  background-color: #70a3b7;
+}
+.toGamePage:hover{
+  background-color:#87c58c ;
+}
 
-.input-field label {
-    color: #000;
-    
-  }
-.input-field input[type=text]:focus + label {
-    color: #70a3b7 !important;    
-  }
-  .input-field input[type=password]:focus + label {
-    color: #70a3b7 !important;    
-  }
-  .input-field input[type=email]:focus + label {
-    color: #70a3b7 !important;    
-  }
-  
-  .input-field input[type=text] {
-    border-bottom: 1px solid #494848 !important;
-  }
-  .input-field input[type=password] {
-    border-bottom: 1px solid #494848 !important;
-  }
-  .input-field input[type=email] {
-    border-bottom: 1px solid #494848 !important;
-  }
 
-  .input-field input[type=text]:focus {
-    border-bottom: 1px solid #70a3b7 !important;
-  }
-  
-  .input-field input[type=password]:focus {
-    border-bottom: 1px solid #70a3b7 !important;
-  }
-  .input-field input[type=email]:focus {
-    border-bottom: 1px solid #70a3b7 !important;
-  }
+/* Login Styling */
+#loginBtn{
+  background-color:  #87c58c;
+}
 
-  .signup label {
-    color: #000;
-    
+
+/* Singup styling */
+#signUpBtn{
+  background-color: #87c58c;
+}
+
+
+/* colors for input fields */
+  .unBoxInput input[type=text]:focus + label {
+    color: #87c58c !important;    
   }
-  .signup input[type=text]:focus + label {
-    color: #70a3b7 !important;    
+  .unBoxInput input[type=email]:focus + label {
+    color: #87c58c !important;    
   }
-  .signup input[type=email]:focus + label {
-    color: #70a3b7 !important;    
+  .unBoxInput input[type=password]:focus + label {
+    color: #87c58c !important;    
   }
-  .signup input[type=password]:focus + label {
-    color: #70a3b7 !important;    
-  }
-  .signup input[type=text] {
+  .unBoxInput input[type=text] {
     border-bottom: 1px solid #494848 !important;
   
   }
-  .signup input[type=email] {
+  .unBoxInput input[type=email] {
     border-bottom: 1px solid #494848 !important;
  
   }
-  .signup input[type=password] {
+  .unBoxInput input[type=password] {
     border-bottom: 1px solid #494848 !important;
    
   }
-  .signup input[type=text]:focus {
-    border-bottom: 1px solid #70a3b7 !important;
+  .unBoxInput input[type=text]:focus {
+    border-bottom: 1px solid #87c58c !important;
    
   }
-  .signup input[type=email]:focus {
-    border-bottom: 1px solid #70a3b7 !important;
+  .unBoxInput input[type=email]:focus {
+    border-bottom: 1px solid #87c58c !important;
   
   }
-  .signup input[type=password]:focus {
-    border-bottom: 1px solid #70a3b7 !important;
+  .unBoxInput input[type=password]:focus {
+    border-bottom: 1px solid #87c58c !important;
 
   }
-
-  #loginBtn{
-    background-color:  #87c58c;
+  .unBoxInput input[type=text]::placeholder {
+    color: #494848 !important;
+   
   }
-
-  .cardText{
-    font-size: medium;
+  .unBoxInput input[type=email]::placeholder {
+    color: #494848 !important;
+  
   }
+  .unBoxInput input[type=password]::placeholder {
+    color: #494848 !important;
 
+  }
+  /* end of Input styling */
+
+
+ /* Game page styling */
   .gameCard {
     background-color: #70a3b7;
     color: white;
     line-height: 1.5;
-
+  }
+  #infoDiv{
+    line-height: 1;
+    padding-bottom: 15px;    
   }
 
-  .gameAddButton{
-    background-color: #87c58c ;
+  /* User page styling */
+  .userCardUsername{
+    color: black !important;
+    position: relative;
+    bottom: -50px !important;
+    left: 10px !important;
   }
-  .gameAddButton:hover {
-    background-color: #70a3b7 ;
-  }
+
+  
 
   @media (max-width: 576px){
    
@@ -132,9 +134,4 @@ body {
     .cardText{
       font-size: small;
     }
-
-    .gameAddButton{
-      font-size: small;
-    }
-
 }
