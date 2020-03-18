@@ -5,20 +5,27 @@
 <div class='container'>
     <br>
     <div class='row'>
-        <div class='col s3 card'>
-            <p></p>
-        </div>
-        <div class='col s5'>
+        
+        <div class='col s8 offset-s2'>
             <h6 class="center">Take your gaming out of the box.</h6>
+
+            <div class='row'>
+              <form id="gameSearchForm">
+                <div class="input-field col s12">
+          <input placeholder="Search for a game" id="gameSearchInput" type="text" class="validate">
+         
+        </div>
+              </form>
+            </div>
              <div class="row">
     <div class="col s12">
       {{#each games}}
       <div class="card">
         <div class="card-image">        
-          <img src="{{this.dataValues.image}}">
+          <img src="{{this.dataValues.image_url}}">
         </div>
         <div class="card-content">
-          <h4 class='cardText'>{{this.dataValues.name}}</h4>
+          <h4 class='cardText'>{{this.dataValues.names}}</h4>
         </div>
         <div class="card-action">
          
@@ -29,9 +36,7 @@
   </div>
   
         </div>
-        <div class='col s4 card'>
-            <p></p>
-        </div>
+       
 
     </div>
 </div>
