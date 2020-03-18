@@ -27,12 +27,13 @@ router.put("api/users/:id", (req,res) =>{
         firstname: req.body.firstname,
         lastname: req.body.lastname,
     },
-    {where: {
-        id: req.params.id
-    }}).then(data => {
-        res.json(data);
-    });
-
+        {
+            where: {
+                id: req.params.id
+            }
+        }).then(data => {
+            res.json(data);
+        });
 });
 
 router.delete("api/users/:id", (req, res) =>{
