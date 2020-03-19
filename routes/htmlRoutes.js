@@ -6,89 +6,81 @@ const db = require("../models")
 // const Games = require('../models/gameModel.js');
 
 // Create all our routes and set up logic within those routes where required.
-module.exports = function(router){
-router.get("/", (req,res) => {
-  db.Game.findAll({limit : 10}).then(data => {
-    
-    let allGamesObject = {
-      games: data
-  
-    };
-    res.render("index", allGamesObject);
+module.exports = function (router) {
+  router.get("/", (req, res) => {
+    db.Game.findAll({ limit: 10 }).then(data => {
 
-  });
-});
-
-router.get("/popular", (req, res) => {
-  db.Game.findAll({order: {
-    rank: 'ASC'
-  }}).then(data => {
-    let rankedGames = {
-      games: data
-      //limit?
-    }
-    res.render("index", rankedGames)
-  });
-
-});
-
-router.post("/search", (req, res) => {
-  console.log(req.body);
-  db.Game.findOne({where: {
-    names: req.body.name
-  }}).then(data => {
-    console.log(data)
-    
-    let gameObject = {
-      games: data  
-    };
-    res.render("game", gameObject);
-  });
-})
-
-router.get("/games/:id", (req, res) => {
-  console.log(req.params.id)
-  db.Game.findOne({where: {id: req.params.id}}).then( data => {
-    console.log(data);
-    res.render("game", data)
-  })
-})
-
-router.get("/login", (req, res) => {
-  res.render("login");
-});
-
-router.get("/signup", (req,res) => {
-  res.render("signUp");
-})
-
-router.get("/user/:id",  (req,res) => {
-  db.User.findOne({where: {id: req.params.id}, Include: [db.Game] }).then(thisUser => {
-    // console.log(thisUser)
-    res.render("user", thisUser);
-    // res.json(thisUser);
-  });
- 
-});
-
-
-router.get("/authfailed", (req, res) => {
-  res.render("pleaseLogin")
-})
-
-router.get("/addGames", (req, res) => {
-  router.get("/", (req,res) => {
-    db.Game.findAll({limit : 10}).then(data => {
-      
       let allGamesObject = {
         games: data
-    
+
       };
-  res.render("userAddGames", allGamesObject)
-})
+      res.render("index", allGamesObject);
+
+    });
+  });
+
+  router.get("/lfg", (req, res) => {
+
+    res.render("lookingforgroup")
+  });
+
+
+  router.post("/search", (req, res) => {
+    console.log(req.body);
+    db.Game.findOne({
+      where: {
+        names: req.body.name
+      }
+    }).then(data => {
+      console.log(data)
+
+      let gameObject = {
+        games: data
+      };
+      res.render("game", gameObject);
+    });
   })
 
-})
+  router.get("/games/:id", (req, res) => {
+    console.log(req.params.id)
+    db.Game.findOne({ where: { id: req.params.id } }).then(data => {
+      console.log(data);
+      res.render("game", data)
+    })
+  })
+
+  router.get("/login", (req, res) => {
+    res.render("login");
+  });
+
+  router.get("/signup", (req, res) => {
+    res.render("signUp");
+  })
+
+  router.get("/user/:id", (req, res) => {
+    db.User.findOne({ where: { id: req.params.id }, Include: [db.Game] }).then(thisUser => {
+      // console.log(thisUser)
+      res.render("user", thisUser);
+      // res.json(thisUser);
+    });
+
+  });
+
+
+  router.get("/authfailed", (req, res) => {
+    res.render("pleaseLogin")
+  })
+
+  router.get("/addgames", (req, res) => {
+    
+      db.User.findAll({}).then(data => {
+        let allUserObject = { users: data };
+
+        res.render("userAddGame", allUserObject)
+      })
+    })
+
+  
 }
 
 

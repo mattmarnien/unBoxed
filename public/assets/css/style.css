@@ -123,6 +123,11 @@ body {
     left: 10px !important;
   }
 
+  /* test styling */
+  .addGamesImage{
+    height: 100px;
+    width: 150px;
+  }
   
 
   @media (max-width: 576px){

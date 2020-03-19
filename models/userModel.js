@@ -1,4 +1,4 @@
-const moment = require('moment');
+const moment = require('moment')
 module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define("User", {
       username: {
@@ -27,14 +27,24 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         
     }, 
-    location: {
+    city: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    onlineGaming: {
+    state: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    
+    onlinegaming: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
       default: true
+    },
+    zipcode: {
+      type: DataTypes.INTEGER(5),
+      allowNull: true,
+      default: 00001
     },
     createdAt: {
       allowNull: true,
@@ -48,10 +58,13 @@ module.exports = function(sequelize, DataTypes) {
     }
     });
 
-    User.associate = function(models) {
-      User.belongsToMany(models.Game, { through: 'User_Games'});
-    }
-    
+    User.associate = (models) => {
+      User.belongsToMany(models.Game, {
+        through: 'userGames',
+        as: 'games',
+        foreignKey: 'userId'
+      });
+    };
   
     return User;
   };

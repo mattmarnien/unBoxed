@@ -1,4 +1,5 @@
 
+var db = require("../models")
 module.exports = function (sequelize, DataTypes) {
     var Game = sequelize.define("Game", {
         // Giving the Author model a name of type STRING
@@ -92,9 +93,13 @@ module.exports = function (sequelize, DataTypes) {
         }
        
     });
-    Game.associate = function(models){
-        Game.belongsToMany(models.User, {through: 'User_Games'})
-      }
+    Game.associate = (models) => {
+        Game.belongsToMany(models.User, {
+          through: 'userGames',
+          as: 'users',
+          foreignKey: 'gameId'
+        });
+      };
    
     return Game;
 
