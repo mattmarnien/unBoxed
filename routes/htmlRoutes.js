@@ -42,7 +42,7 @@ router.post("/search", (req, res) => {
     let gameObject = {
       games: data  
     };
-    res.render("index", gameObject);
+    res.render("game", gameObject);
   });
 })
 
@@ -62,9 +62,11 @@ router.get("/signup", (req,res) => {
   res.render("signUp");
 })
 
-router.get("/user/:id", async (req,res) => {
-  db.User.findOne({where: {id: req.params.id}}).then(thisUser => {
+router.get("/user/:id",  (req,res) => {
+  db.User.findOne({where: {id: req.params.id}, Include: [db.Game] }).then(thisUser => {
+    // console.log(thisUser)
     res.render("user", thisUser);
+    // res.json(thisUser);
   });
  
 });
