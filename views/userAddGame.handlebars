@@ -1,9 +1,18 @@
 <div class='container'>
 <div class='row center'>
-    <h1>Pick a game to add</h1>
-    {{#each games}}
-    <button class='btn-lrg addGameButton' data-id='{{this.dataValues.id}}'></button>
-    {{/each}}
+    <h1>What user is adding a game?</h1>
+    
+  <div class="input-field col s12">
+    <select id="selectUser">
+      <option value="" disabled selected>Choose your option</option>
+      {{#each users}}
+      <option value="{{this.dataValues.id}}">{{this.dataValues.firstname}} {{this.dataValues.lastname}}</option>
+      {{/each}}
+    </select>
+  </div>
+</div>
+<div class="row" id="gamesDiv">
+    
 </div>
 </div>
 
