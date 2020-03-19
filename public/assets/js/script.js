@@ -86,6 +86,10 @@ description.on("click", function (event) {
   })
 })
 
+$(document).on("click", event => {
+  $("#infoDiv").empty();
+})
+
 
 /////////
 //Signup Page Script
