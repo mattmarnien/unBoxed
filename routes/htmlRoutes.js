@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models")
+const passport = require('passport');
 // html route file for page queries
 // const User = require('../models/userModel.js');
 // const Games = require('../models/gameModel.js');
@@ -44,7 +45,6 @@ module.exports = function (router) {
   router.get("/games/:id", (req, res) => {
     console.log(req.params.id)
     db.Game.findOne({ where: { id: req.params.id } }).then(data => {
-      console.log(data);
       res.render("game", data)
     })
   })
@@ -53,15 +53,19 @@ module.exports = function (router) {
     res.render("login");
   });
 
+  router.get("/user/login", passport.authenticate('local'), (req,res) => {
+  res.json(req.user);
+
+  })
+
   router.get("/signup", (req, res) => {
     res.render("signUp");
   })
 
-  router.get("/user/:id", (req, res) => {
-    db.User.findOne({ where: { id: req.params.id }, Include: [db.Game] }).then(thisUser => {
-      // console.log(thisUser)
+  router.get("/user", (req, res) => {
+   let thisUser = req.session.passport.user;
+    db.User.findOne({ where: { id: thisUser }, Include: [db.Game] }).then(thisUser => {      
       res.render("user", thisUser);
-      // res.json(thisUser);
     });
 
   });
@@ -71,14 +75,10 @@ module.exports = function (router) {
     res.render("pleaseLogin")
   })
 
-  router.get("/addgames", (req, res) => {
-    
-      db.User.findAll({}).then(data => {
-        let allUserObject = { users: data };
-
-        res.render("userAddGame", allUserObject)
+  router.get("/addgames", (req, res) => {  
+        res.render("userAddGame")
       })
-    })
+    
 
   
 }

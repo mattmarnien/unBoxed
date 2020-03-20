@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const axios = require('axios').default;
+var passport = require('passport');
+const bcrypt = require('bcrypt')
 
 // routes for api calls across unBoxed
 const db = require('../models')
-module.exports = function (router) {
-    router.post("/api/users", (req, res) => {
+module.exports = function (router) {    
+    router.post("/api/signup", (req, res) => {
+       
         const authId = "4dfe4ca2-e094-16cf-b3ac-79c826357f87";
         const authToken = "a6Z90FIoqCoEkPGGZOWs"
         let queryUrl = "https://us-zipcode.api.smartystreets.com/lookup?auth-id=" + authId + "&auth-token=" + authToken + "&city=" + req.body.city + "&state=" + req.body.state;
@@ -20,7 +23,7 @@ module.exports = function (router) {
                 email: req.body.email,
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
-                password: req.body.password,
+                password: db.User.generateHash(req.body.password),
                 city: req.body.city,
                 state: req.body.state,
                 zipcode: zip
@@ -41,7 +44,8 @@ module.exports = function (router) {
     })
 
 
-    router.put("api/users/:id", (req, res) => {
+    router.put("api/users/:id", passport.authenticate('local'), (req, res) => {
+
         db.User.update({
             username: req.body.username,
             email: req.body.email,
@@ -53,23 +57,22 @@ module.exports = function (router) {
         },
             {
                 where: {
-                    id: req.params.id
+                    id: req.user.id
                 }
             }).then(data => {
                 res.json(data);
             });
     });
 
-    router.delete("/api/users/:id", (req, res) => {
-        db.User.destroy({ where: { id: req.params.id } }).then(data => {
+    router.delete("/api/users/:id", passport.authenticate('local'), (req, res) => {
+        db.User.destroy({ where: { id: req.user.id } }).then(data => {
             res.json(data);
         });
     });
 
-    router.post("/api/users/games/:id", async (req, res) => {
-        console.log(req.params.id);
-        console.log(req.body.id)
-        db.UserGame.create({ userId: req.params.id, gameId: req.body.id })
+    router.post("/api/users/games/", passport.authenticate('local'), (req, res) => {
+        console.log(req.user.id);
+        db.UserGame.create({ userId: req.user.id, gameId: req.body.id })
 
     });
 
