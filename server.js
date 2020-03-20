@@ -7,6 +7,15 @@ var db = require("./models");
 var app = express();
 var PORT = process.env.PORT || 3000;
 
+//passport and its dependenices
+var passport     = require('passport');
+var flash        = require('connect-flash');
+var cookieParser = require('cookie-parser');
+var session      = require('express-session');
+
+require('./config/passport')(passport);
+
+
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -21,9 +30,24 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
+
+
+app.use(session({
+  key: 'user_sid',
+  secret: process.env.MYSECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+      expires: 60000000
+  }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Routes
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
+require("./routes/apiRoutes")(app, passport);
+require("./routes/htmlRoutes")(app, passport);
+
 
 var syncOptions = { force: false };
 

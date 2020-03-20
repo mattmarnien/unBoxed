@@ -1,4 +1,5 @@
-const moment = require('moment')
+const moment = require('moment');
+var bcrypt  = require('bcrypt');
 module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define("User", {
       username: {
@@ -57,6 +58,13 @@ module.exports = function(sequelize, DataTypes) {
      default: moment.now()
     }
     });
+
+    User.generateHash = function(password) {
+      return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
+    };
+    User.prototype.validPassword = function(password) {
+      return bcrypt.compareSync(password, this.password);
+  };
 
     User.associate = (models) => {
       User.belongsToMany(models.Game, {

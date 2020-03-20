@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models")
+const passport = require('passport');
 // html route file for page queries
 // const User = require('../models/userModel.js');
 // const Games = require('../models/gameModel.js');
@@ -45,6 +46,7 @@ router.get("/search/:search", (req, res) => {
 
 // router.get("/search"), (req, res) =>
 
+<<<<<<< HEAD
 router.get("/games/:id", (req, res) => {
   console.log(req.params.id)
   db.Game.findOne({where: {
@@ -52,9 +54,17 @@ router.get("/games/:id", (req, res) => {
   }}).then( data => {
     console.log("!!!!!!!!!!!!!!!!!", data);
     res.render("game", data)
+=======
+  router.get("/games/:id", (req, res) => {
+    console.log(req.params.id)
+    db.Game.findOne({ where: { id: req.params.id } }).then(data => {
+      res.render("game", data)
+    })
+>>>>>>> d4850f2fed7b7129ddd6cfa0e93f235084995556
   })
 })
 
+<<<<<<< HEAD
 router.get("/login", (req, res) => {
   res.render("login");
 });
@@ -62,6 +72,26 @@ router.get("/login", (req, res) => {
 router.get("/signup", (req,res) => {
   res.render("signUp");
 })
+=======
+  router.get("/login", (req, res) => {
+    res.render("login");
+  });
+
+  router.get("/user/login", passport.authenticate('local'), (req,res) => {
+  res.json(req.user);
+
+  })
+
+  router.get("/signup", (req, res) => {
+    res.render("signUp");
+  })
+
+  router.get("/user", (req, res) => {
+   let thisUser = req.session.passport.user;
+    db.User.findOne({ where: { id: thisUser }, Include: [db.Game] }).then(thisUser => {      
+      res.render("user", thisUser);
+    });
+>>>>>>> d4850f2fed7b7129ddd6cfa0e93f235084995556
 
 router.get("/user/:id",  (req,res) => {
   db.User.findOne({where: {id: req.params.id}, Include: [db.Game] }).then(thisUser => {
@@ -73,6 +103,7 @@ router.get("/user/:id",  (req,res) => {
 });
 
 
+<<<<<<< HEAD
 router.get("/authfailed", (req, res) => {
   res.render("pleaseLogin")
 })
@@ -89,6 +120,12 @@ router.get("/addGames", (req, res) => {
   res.render("userAddGames", allGamesObject)
 })
   })
+=======
+  router.get("/addgames", (req, res) => {  
+        res.render("userAddGame")
+      })
+    
+>>>>>>> d4850f2fed7b7129ddd6cfa0e93f235084995556
 
 })
 }
