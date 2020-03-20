@@ -168,7 +168,6 @@ signUpButton.on("click", event => {
 ////
 const addButton = $(".addGameButton");
 
-<<<<<<< HEAD
 addButton.on("click", function (event) {
   game = $(this).data('id');
   $.ajax({
@@ -176,60 +175,11 @@ addButton.on("click", function (event) {
     url: "/api/users/:id",
     data: game
   }).then(() => {
-=======
-
-
-
-const userSelect = $("#selectUser");
-const gamesDiv = $("#gamesDiv")
-const gameAddButton = $(".gameAddButton")
-let user = 0;
-
-// userSelect.on("change", event => {
-//   user = event.target.value;
-//   console.log("selected");
-//   $.ajax({
-//     method: "GET",
-//     url: "/api/games"
-//   }).then(data => {
-//     console.log(data);
-//     for(let i =0; i < data.length; i++){    
-//     let newDiv = $("<div>");
-//     let newTitle = $("<h4>");
-//     let newImage = $(`<img src='${data[i].image_url}' class='addGamesImage'>`)
-//     let newButton = $(`<button class='btn gameAddButton col s3' data-id='${data[i].id}'>`)
-//     newButton.text("Add")
-//     newTitle.text(data[i].names);
-//     gamesDiv.append(newDiv);
-//     newDiv.append(newTitle, newImage, newButton);
-
-//     }
-
-
-//   })
-// })
-
-$(document).on("click", ".gameAddButton", function (event) {
-  console.log("click");
-  console.log(user);
-  let game = {
-    id: $(this).data('id')
-  };
-  console.log(game);
-  $.ajax({
-    method: "POST",
-    url: "/api/users/games/",
-    data: game
-  }).then(data => {
-    console.log("game added")
->>>>>>> d4850f2fed7b7129ddd6cfa0e93f235084995556
 
   })
 
 })
 
-<<<<<<< HEAD
-=======
 
 //////////
 //LFG Scripts
@@ -280,7 +230,6 @@ lfgSelect.on("change", event => {
 
 
 
->>>>>>> d4850f2fed7b7129ddd6cfa0e93f235084995556
 /////////////
 //Materialize Scripts
 ////////
