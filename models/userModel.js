@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         validate: {
             isEmail: {
-             msg: "Must be a valid email address",
+            msg: "Must be a valid email address",
         }}
     },
       firstname: {

@@ -3,21 +3,23 @@
 //////////
 //Index Script
 ///
-
 const gameSearch = $("#gameSearchInput");
 const gameSearchForm = $("#gameSearchForm");
+const gameAddButton = $();
+const gamePageButton = $(".toGamePage");
 
 gameSearchForm.on("submit", event => {
   event.preventDefault();
   let search = gameSearch.val().trim()
+  console.log("search!!!!!!!", search);
   $.ajax({
-    method: "POST",
-    url: "/search",
-    data: { name: search }
-  }).then(() => {
+    method: "GET",
+    url: window.location = "/search/" + search
+  }).then(data => {
+    console.log("!!!!!!!!!", data)
+  });
 
-  })
-})
+});
 
 //////////
 //Game Page Script
@@ -27,11 +29,11 @@ const description = $(".descriptionLink")
 
 function generateDescription(data) {
   let newDiv = $("<div class='gameExtraInfo'>");
-  let descriptionDiv = $("<div>")
-  let newH6 = $("<h6>");
-  newH6.text("Description: ")
-  newDiv.append(descriptionDiv);
-  descriptionDiv.append(newH6, data.games[0].description_preview);
+    let descriptionDiv = $("<div>")
+    let newH6 = $("<h6>");
+    newH6.text("Description: ")
+    newDiv.append(descriptionDiv);
+    descriptionDiv.append(newH6, data.games[0].description_preview);
   $("#infoDiv").append(newDiv);
 }
 
@@ -78,7 +80,7 @@ description.on("click", function (event) {
   }).then(data => {
     console.log(data)
     generateDescription(data)
-
+    
   })
 })
 
@@ -96,38 +98,27 @@ const signUpLastname = $("#signUpLastname");
 const signUpUsername = $("#signUpUsername");
 const signUpPassword = $("#signUpPassword");
 const signUpConfirmPassword = $("#signUpConfirmPassword");
-const signUpCity = $("#signUpCity");
-const signUpState = $("#signUpState");
 const signUpButton = $("#signUpBtn");
 const signUpForm = $("#signUpForm");
 
-async function getUserInfo() {
-
-
+function getUserInfo() {
   let user = {
     email: signUpEmail.val().trim(),
     firstname: signUpFirstname.val().trim(),
     lastname: signUpLastname.val().trim(),
     username: signUpUsername.val().trim(),
     password: signUpPassword.val().trim(),
-    city: signUpCity.val().trim(),
-    state: signUpState.val().trim()
   };
-
-
   return user;
-
-
-
 }
 
 signUpForm.on("submit", event => {
   event.preventDefault();
 })
-signUpButton.on("click", async event => {
+signUpButton.on("click", event => {
   event.preventDefault();
   if (signUpPassword.val().trim() === signUpConfirmPassword.val().trim()) {
-    let newUser = await getUserInfo();
+    let newUser = getUserInfo();
     console.log(newUser);
     $.ajax({
       method: "POST",
@@ -145,100 +136,19 @@ signUpButton.on("click", async event => {
 //////////
 //Add game scripts
 ////
+const addButton = $(".addGameButton");
 
-
-
-
-const userSelect = $("#selectUser");
-const gamesDiv = $("#gamesDiv")
-const gameAddButton = $(".gameAddButton")
-let user = 0;
-
-userSelect.on("change", event => {
-  user = event.target.value;
-  console.log("selected");
-  $.ajax({
-    method: "GET",
-    url: "/api/games"
-  }).then(data => {
-    console.log(data);
-    for(let i =0; i < data.length; i++){    
-    let newDiv = $("<div>");
-    let newTitle = $("<h4>");
-    let newImage = $(`<img src='${data[i].image_url}' class='addGamesImage'>`)
-    let newButton = $(`<button class='btn gameAddButton col s3' data-id='${data[i].id}'>`)
-    newButton.text("Add")
-    newTitle.text(data[i].names);
-    gamesDiv.append(newDiv);
-    newDiv.append(newTitle, newImage, newButton);
-
-    }
-
-
-  })
-})
-
-$(document).on("click", ".gameAddButton", function (event) {
-  console.log("click");
-  console.log(user);
-  let game = {
-    id: $(this).data('id')
-  };
-  console.log(game);
+addButton.on("click", function (event) {
+  game = $(this).data('id');
   $.ajax({
     method: "POST",
-    url: "/api/users/games/" + user,
+    url: "/api/users/:id",
     data: game
-  }).then(data => {
-    console.log(data)
+  }).then(() => {
 
   })
 
 })
-
-
-//////////
-//LFG Scripts
-///
-
-const lfgSelect = $("#groupTypeSelect");
-
-
-
-lfgSelect.on("change", event => {
-  let choice = event.target.value;
-  console.log(choice)
-  if (choice == 1) {
-    $.ajax({
-      method: "GET",
-      url: "/api/users/group"
-    }).then(data => {
-      let matchArr = [];      
-      for (let i = 0; i < 3;) {
-        let alreadyPresent = false;
-        let randoCalrissian = Math.floor(Math.random() * data.length);
-        for(let j = 0; j<matchArr.length; j ++){
-         if(matchArr[j].id === data[randoCalrissian].id){         
-         alreadyPresent = true;
-         }
-        }
-        if(alreadyPresent === false){   
-          matchArr.push(data[randoCalrissian]);
-          i++;          
-        }   
-        }
-        console.log(matchArr)
-      })
-    
-    }
-  
-  if (choice == 2) {
-
-  }
-})
-
-
-
 
 /////////////
 //Materialize Scripts
@@ -248,6 +158,5 @@ lfgSelect.on("change", event => {
 document.addEventListener('DOMContentLoaded', function () {
   var elems = document.querySelectorAll('.sidenav');
   var instances = M.Sidenav.init(elems);
-  var elems = document.querySelectorAll('select');
-  var instances = M.FormSelect.init(elems);
 });
+

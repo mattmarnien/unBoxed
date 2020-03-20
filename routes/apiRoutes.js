@@ -93,4 +93,12 @@ module.exports = function (router) {
         })
 
     })
+
+    router.get("/search"), async (req, res) => {
+        db.Game.findAll({
+            where: {
+                na
+            }
+        })
+    }
 }
