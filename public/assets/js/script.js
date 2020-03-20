@@ -1,5 +1,35 @@
 // Front end script
 
+
+/////////
+//Login Script
+//
+
+const loginButton = $("#loginButton")
+const loginForm = $(".loginForm")
+const loginUsername = $("#loginUsernameInput");
+const loginPassword = $("#loginPasswordInput");
+
+loginForm.on("submit", event => {
+  event.preventDefault();
+  let username = loginUsername.val().trim();
+  let password = loginPassword.val().trim();
+  let loginObj = {
+    username: username,
+    password: password
+  }
+  $.ajax({
+    method: "GET",
+    url: "/user/login",
+    data: loginObj
+  }).then(() => {
+    window.location.href = "/user";
+  })
+
+})
+
+
+
 //////////
 //Index Script
 ///
@@ -131,7 +161,7 @@ signUpButton.on("click", async event => {
     console.log(newUser);
     $.ajax({
       method: "POST",
-      url: "/api/users",
+      url: "/api/signup",
       data: newUser
     }).then(() => {
       console.log(newUser.firstname + " " + newUser.lastname + " has been added to the database.")
@@ -154,29 +184,29 @@ const gamesDiv = $("#gamesDiv")
 const gameAddButton = $(".gameAddButton")
 let user = 0;
 
-userSelect.on("change", event => {
-  user = event.target.value;
-  console.log("selected");
-  $.ajax({
-    method: "GET",
-    url: "/api/games"
-  }).then(data => {
-    console.log(data);
-    for(let i =0; i < data.length; i++){    
-    let newDiv = $("<div>");
-    let newTitle = $("<h4>");
-    let newImage = $(`<img src='${data[i].image_url}' class='addGamesImage'>`)
-    let newButton = $(`<button class='btn gameAddButton col s3' data-id='${data[i].id}'>`)
-    newButton.text("Add")
-    newTitle.text(data[i].names);
-    gamesDiv.append(newDiv);
-    newDiv.append(newTitle, newImage, newButton);
+// userSelect.on("change", event => {
+//   user = event.target.value;
+//   console.log("selected");
+//   $.ajax({
+//     method: "GET",
+//     url: "/api/games"
+//   }).then(data => {
+//     console.log(data);
+//     for(let i =0; i < data.length; i++){    
+//     let newDiv = $("<div>");
+//     let newTitle = $("<h4>");
+//     let newImage = $(`<img src='${data[i].image_url}' class='addGamesImage'>`)
+//     let newButton = $(`<button class='btn gameAddButton col s3' data-id='${data[i].id}'>`)
+//     newButton.text("Add")
+//     newTitle.text(data[i].names);
+//     gamesDiv.append(newDiv);
+//     newDiv.append(newTitle, newImage, newButton);
 
-    }
+//     }
 
 
-  })
-})
+//   })
+// })
 
 $(document).on("click", ".gameAddButton", function (event) {
   console.log("click");
@@ -187,10 +217,10 @@ $(document).on("click", ".gameAddButton", function (event) {
   console.log(game);
   $.ajax({
     method: "POST",
-    url: "/api/users/games/" + user,
+    url: "/api/users/games/",
     data: game
   }).then(data => {
-    console.log(data)
+    console.log("game added")
 
   })
 
@@ -206,13 +236,14 @@ const lfgSelect = $("#groupTypeSelect");
 
 
 lfgSelect.on("change", event => {
-  let choice = event.target.value;
+  let choice = event.target.value
   console.log(choice)
   if (choice == 1) {
     $.ajax({
       method: "GET",
       url: "/api/users/group"
     }).then(data => {
+      
       let matchArr = [];      
       for (let i = 0; i < 3;) {
         let alreadyPresent = false;
@@ -222,7 +253,12 @@ lfgSelect.on("change", event => {
          alreadyPresent = true;
          }
         }
-        if(alreadyPresent === false){   
+        if(alreadyPresent === false){
+          for(let k = 0; k < data[randoCalrissian].games.length; k ++){
+
+          }   
+          
+          if(data[randoCalrissian].games)
           matchArr.push(data[randoCalrissian]);
           i++;          
         }   
