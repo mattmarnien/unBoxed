@@ -33,21 +33,23 @@ loginForm.on("submit", event => {
 //////////
 //Index Script
 ///
-
 const gameSearch = $("#gameSearchInput");
 const gameSearchForm = $("#gameSearchForm");
+const gameAddButton = $();
+const gamePageButton = $(".toGamePage");
 
 gameSearchForm.on("submit", event => {
   event.preventDefault();
   let search = gameSearch.val().trim()
+  console.log("search!!!!!!!", search);
   $.ajax({
-    method: "POST",
-    url: "/search",
-    data: { name: search }
-  }).then(() => {
+    method: "GET",
+    url: window.location = "/search/" + search
+  }).then(data => {
+    console.log("!!!!!!!!!", data)
+  });
 
-  })
-})
+});
 
 //////////
 //Game Page Script
@@ -57,11 +59,11 @@ const description = $(".descriptionLink")
 
 function generateDescription(data) {
   let newDiv = $("<div class='gameExtraInfo'>");
-  let descriptionDiv = $("<div>")
-  let newH6 = $("<h6>");
-  newH6.text("Description: ")
-  newDiv.append(descriptionDiv);
-  descriptionDiv.append(newH6, data.games[0].description_preview);
+    let descriptionDiv = $("<div>")
+    let newH6 = $("<h6>");
+    newH6.text("Description: ")
+    newDiv.append(descriptionDiv);
+    descriptionDiv.append(newH6, data.games[0].description_preview);
   $("#infoDiv").append(newDiv);
 }
 
@@ -108,7 +110,7 @@ description.on("click", function (event) {
   }).then(data => {
     console.log(data)
     generateDescription(data)
-
+    
   })
 })
 
@@ -126,38 +128,27 @@ const signUpLastname = $("#signUpLastname");
 const signUpUsername = $("#signUpUsername");
 const signUpPassword = $("#signUpPassword");
 const signUpConfirmPassword = $("#signUpConfirmPassword");
-const signUpCity = $("#signUpCity");
-const signUpState = $("#signUpState");
 const signUpButton = $("#signUpBtn");
 const signUpForm = $("#signUpForm");
 
-async function getUserInfo() {
-
-
+function getUserInfo() {
   let user = {
     email: signUpEmail.val().trim(),
     firstname: signUpFirstname.val().trim(),
     lastname: signUpLastname.val().trim(),
     username: signUpUsername.val().trim(),
     password: signUpPassword.val().trim(),
-    city: signUpCity.val().trim(),
-    state: signUpState.val().trim()
   };
-
-
   return user;
-
-
-
 }
 
 signUpForm.on("submit", event => {
   event.preventDefault();
 })
-signUpButton.on("click", async event => {
+signUpButton.on("click", event => {
   event.preventDefault();
   if (signUpPassword.val().trim() === signUpConfirmPassword.val().trim()) {
-    let newUser = await getUserInfo();
+    let newUser = getUserInfo();
     console.log(newUser);
     $.ajax({
       method: "POST",
@@ -175,7 +166,17 @@ signUpButton.on("click", async event => {
 //////////
 //Add game scripts
 ////
+const addButton = $(".addGameButton");
 
+<<<<<<< HEAD
+addButton.on("click", function (event) {
+  game = $(this).data('id');
+  $.ajax({
+    method: "POST",
+    url: "/api/users/:id",
+    data: game
+  }).then(() => {
+=======
 
 
 
@@ -221,11 +222,14 @@ $(document).on("click", ".gameAddButton", function (event) {
     data: game
   }).then(data => {
     console.log("game added")
+>>>>>>> d4850f2fed7b7129ddd6cfa0e93f235084995556
 
   })
 
 })
 
+<<<<<<< HEAD
+=======
 
 //////////
 //LFG Scripts
@@ -276,6 +280,7 @@ lfgSelect.on("change", event => {
 
 
 
+>>>>>>> d4850f2fed7b7129ddd6cfa0e93f235084995556
 /////////////
 //Materialize Scripts
 ////////
@@ -284,6 +289,5 @@ lfgSelect.on("change", event => {
 document.addEventListener('DOMContentLoaded', function () {
   var elems = document.querySelectorAll('.sidenav');
   var instances = M.Sidenav.init(elems);
-  var elems = document.querySelectorAll('select');
-  var instances = M.FormSelect.init(elems);
 });
+
