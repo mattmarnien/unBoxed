@@ -4,11 +4,19 @@ const router = express.Router();
 const db = require("../models");
 const passport = require("passport");
 // html route file for page queries
+function isLoggedIn(req,res,next) {
+  if(req.isAuthenticated()){
+      return next();
+  } else {
+      res.redirect("/login");
+  }
+}
 
 // Create all our routes and set up logic within those routes where required.
 module.exports = function(router) {
   router.get("/", (req, res) => {
-    db.Game.findAll({ limit: 10 }).then(data => {
+    db.Game.findAll({ limit: 30 }).then(data => {
+
       let allGamesObject = {
         games: data
       };
@@ -17,7 +25,7 @@ module.exports = function(router) {
     });
   });
 
-  router.get("/lfg", (req, res) => {
+  router.get("/lfg", isLoggedIn, (req, res) => {
 
     res.render("lookingforgroup");
   });
@@ -62,13 +70,12 @@ module.exports = function(router) {
     res.render("signUp");
   });
 
-  router.get("/user", (req, res) => {
-    let thisUser = req.session.passport.user;
-    db.User.findOne({ where: { id: thisUser }, Include: [db.Game] }).then(
-      thisUser => {
-        res.render("user", thisUser);
-      }
-    );
+  router.get("/user", isLoggedIn, (req, res) => {
+    db.User.findOne({ where: { id: req.session.passport.user }, Include: [db.Game] }).then(thisUser => {  
+      console.log(thisUser)    
+      res.render("user", thisUser);
+    });
+
   });
 
   router.get("/authfailed", (req, res) => {

@@ -7,35 +7,36 @@
   <div class='row'>
 
     <div class='col s12'>
-      <h6 class="center">Take your gaming out of the box.</h6>
+      <h4 class="center">Take your gaming out of the box.</h4>
       <div class='row'>
-        <form id="gameSearchForm">
+        <form id="gameSearchForm" class="unBoxInput">
           <div class="input-field col s8 offset-s2">
-            <input placeholder="Search for a game" id="gameSearchInput" type="text" class="validate center-align">
+            <input placeholder="Search for a game" id="gameSearchInput" type="text" class="validate center-align ">
           <menu></menu>
           </div>
         </form>
       </div>
       <div class="row">
-        <div class="col s10 offset-s1">
+        <div class="col s12">
           {{#each games}}
-          <div class="card">
+          <div class='cardHolder col l4 m6 s12'>
+          <div class="card indexCard">
             <div class="card-image">
-              <img src="{{this.dataValues.image_url}}">
+              <img class="gameCardImage" src="{{this.dataValues.image_url}}">
             </div>
-            <div class="card-content">
-              <h4 class='cardTitle'>{{this.dataValues.names}}</h4> <span
+            <div class="card-content row cardContent">
+              <h5 class='cardTitle'>{{this.dataValues.names}}</h5> <span
                 class='cardText'>{{this.dataValues.min_players}} - {{this.dataValues.max_players}} players</span>
               <p class='cardText flow-text'>Category: {{this.dataValues.category}}</p>
-              <div class='row'>
-                <button class='btn gameAddButton col s3' data-id="{{this.dataValues.id}}"><i
-                    class="fas fa-plus-circle"></i> Add</button>
-                <a href="/games/{{this.dataValues.id}}"><button class='btn toGamePage col s3 offset-s6' data-id="{{this.dataValues.id}}"><i
-                    class="fas fa-puzzle-piece"></i> See game page</button></a>
+              
+            </div>
+            <div class='row'>
+                <button class='btn gameAddButton col s3 offset-s2' data-id="{{this.dataValues.id}}"><i class="fas fa-plus-circle"></i> Add</button>
+                <a href="/games/{{this.dataValues.id}}"><button class='btn toGamePage col s3 offset-s1' data-id="{{this.dataValues.id}}"><i class="fas fa-puzzle-piece"></i> Info</button></a>
 
               </div>
 
-            </div>
+          </div>
           </div>
           {{/each}}
         </div>
