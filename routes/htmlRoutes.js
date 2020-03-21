@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const db = require("../models");
 const passport = require("passport");
 // html route file for page queries
@@ -12,12 +13,15 @@ module.exports = function(router) {
         games: data
       };
       res.render("index", allGamesObject);
+
     });
   });
 
   router.get("/lfg", (req, res) => {
+
     res.render("lookingforgroup");
   });
+
 
   router.post("/search", (req, res) => {
     console.log(req.body);
@@ -26,13 +30,16 @@ module.exports = function(router) {
         names: req.body.name
       }
     }).then(data => {
+
       console.log(data);
+
 
       let gameObject = {
         games: data
       };
       res.render("game", gameObject);
     });
+
   });
 
   router.get("/games/:id", (req, res) => {
@@ -41,6 +48,7 @@ module.exports = function(router) {
       res.render("game", data);
     });
   });
+
 
   router.get("/login", (req, res) => {
     res.render("login");

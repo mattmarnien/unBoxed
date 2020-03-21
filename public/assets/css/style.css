@@ -1,163 +1,144 @@
 /* Custom CSS */
+/* global tweaks */
 body {
-<<<<<<< Updated upstream
     background-color: silver;
+    font-family: 'Maven Pro', sans-serif;
 }
 
-#mainNav{
-    height: 70px;
-   
-=======
-  background-color: silver;
-  font-family: "Maven Pro", sans-serif;
-}
 
 /* main styling */
-#mainNav {
-  height: 70px;
->>>>>>> Stashed changes
+#mainNav{
+    height: 70px;  
 }
-
 #mainLogo {
-  height: 93px;
+    height: 93px;
 }
-<<<<<<< Updated upstream
-
 .navLinks{
     font-size: large;  
     color: white;
-=======
-.navLinks {
-  font-size: large;
-  color: white;
->>>>>>> Stashed changes
 }
-
 .mobileIcon {
-  margin-left: 10px;
-  color: #98da9e;
+    margin-left: 10px;
+    color: #98da9e;
 }
 
-<<<<<<< Updated upstream
-.input-field label {
-    color: #000;
-    
-  }
-.input-field input[type=text]:focus + label {
-    color: #70a3b7 !important;    
-  }
-
-  .input-field input[type=text]:focus {
-    border-bottom: 1px solid #70a3b7 !important;
-    box-shadow: 0 1px 0 0 #70a3b7 !important;
-  }
-
-  #loginBtn{
-    background-color:  #87c58c;
-  }
-=======
 /* Index styling */
-.card {
+.card{
   color: black;
 }
-.cardText {
+.cardText{
   font-size: medium;
 }
-.gameAddButton {
-  background-color: #87c58c;
+.gameAddButton{
+  background-color: #87c58c ;
 }
 .gameAddButton:hover {
+  background-color: #70a3b7 ;
+}
+.toGamePage{
   background-color: #70a3b7;
 }
-.toGamePage {
-  background-color: #70a3b7;
+.toGamePage:hover{
+  background-color:#87c58c ;
 }
-.toGamePage:hover {
-  background-color: #87c58c;
-}
+
 
 /* Login Styling */
-#loginBtn {
-  background-color: #87c58c;
+#loginBtn{
+  background-color:  #87c58c;
 }
+
 
 /* Singup styling */
-#signUpBtn {
+#signUpBtn{
   background-color: #87c58c;
 }
 
+
 /* colors for input fields */
-.unBoxInput input[type="text"]:focus + label {
-  color: #87c58c !important;
-}
-.unBoxInput input[type="email"]:focus + label {
-  color: #87c58c !important;
-}
-.unBoxInput input[type="password"]:focus + label {
-  color: #87c58c !important;
-}
-.unBoxInput input[type="text"] {
-  border-bottom: 1px solid #494848 !important;
-}
-.unBoxInput input[type="email"] {
-  border-bottom: 1px solid #494848 !important;
-}
-.unBoxInput input[type="password"] {
-  border-bottom: 1px solid #494848 !important;
-}
-.unBoxInput input[type="text"]:focus {
-  border-bottom: 1px solid #87c58c !important;
-}
-.unBoxInput input[type="email"]:focus {
-  border-bottom: 1px solid #87c58c !important;
-}
-.unBoxInput input[type="password"]:focus {
-  border-bottom: 1px solid #87c58c !important;
-}
-.unBoxInput input[type="text"]::placeholder {
-  color: #494848 !important;
-}
-.unBoxInput input[type="email"]::placeholder {
-  color: #494848 !important;
-}
-.unBoxInput input[type="password"]::placeholder {
-  color: #494848 !important;
-}
-/* end of Input styling */
+  .unBoxInput input[type=text]:focus + label {
+    color: #87c58c !important;    
+  }
+  .unBoxInput input[type=email]:focus + label {
+    color: #87c58c !important;    
+  }
+  .unBoxInput input[type=password]:focus + label {
+    color: #87c58c !important;    
+  }
+  .unBoxInput input[type=text] {
+    border-bottom: 1px solid #494848 !important;
+  
+  }
+  .unBoxInput input[type=email] {
+    border-bottom: 1px solid #494848 !important;
+ 
+  }
+  .unBoxInput input[type=password] {
+    border-bottom: 1px solid #494848 !important;
+   
+  }
+  .unBoxInput input[type=text]:focus {
+    border-bottom: 1px solid #87c58c !important;
+   
+  }
+  .unBoxInput input[type=email]:focus {
+    border-bottom: 1px solid #87c58c !important;
+  
+  }
+  .unBoxInput input[type=password]:focus {
+    border-bottom: 1px solid #87c58c !important;
 
-/* Game page styling */
-.gameCard {
-  background-color: #70a3b7;
-  color: white;
-  line-height: 1.5;
-}
-#infoDiv {
-  line-height: 1;
-  padding-bottom: 15px;
-}
+  }
+  .unBoxInput input[type=text]::placeholder {
+    color: #494848 !important;
+   
+  }
+  .unBoxInput input[type=email]::placeholder {
+    color: #494848 !important;
+  
+  }
+  .unBoxInput input[type=password]::placeholder {
+    color: #494848 !important;
 
-/* User page styling */
-.userCardUsername {
-  color: black !important;
-  position: relative;
-  bottom: -50px !important;
-  left: 10px !important;
-}
+  }
+  /* end of Input styling */
 
-/* test styling */
-.addGamesImage {
-  height: 100px;
-  width: 150px;
-}
 
-@media (max-width: 576px) {
-  .cardTitle {
-    font-size: medium !important;
-    font-weight: bold;
+ /* Game page styling */
+  .gameCard {
+    background-color: #70a3b7;
+    color: white;
+    line-height: 1.5;
+  }
+  #infoDiv{
+    line-height: 1;
+    padding-bottom: 15px;    
   }
 
-  .cardText {
-    font-size: small;
+  /* User page styling */
+  .userCardUsername{
+    color: black !important;
+    position: relative;
+    bottom: -50px !important;
+    left: 10px !important;
   }
+
+  /* test styling */
+  .addGamesImage{
+    height: 100px;
+    width: 150px;
+  }
+  
+
+  @media (max-width: 576px){
+   
+   
+    .cardTitle{
+        font-size: medium !important;
+        font-weight: bold;
+    }
+
+    .cardText{
+      font-size: small;
+    }
 }
->>>>>>> Stashed changes

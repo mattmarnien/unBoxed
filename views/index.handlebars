@@ -3,39 +3,46 @@
 
 {{!-- main content --}}
 <div class='container'>
-    <br>
-    <div class='row'>
-        <div class='col s2 card'>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero quisquam ipsa qui nesciunt molestiae
-                autem voluptatibus labore impedit cumque ea. Facere similique voluptatibus nemo veritatis ab. Quis,
-                praesentium. Doloremque, aliquid!</p>
-        </div>
-        <div class='col s8'>
-            <h6 class="center">Take your gaming out of the box.</h6>
-        </div>
-        <div class='col s2 card'>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, maxime dolore? Officia in sapiente
-                pariatur quis! Iste voluptas perspiciatis necessitatibus, laboriosam aliquid reprehenderit, omnis
-                dolores blanditiis ea officia nesciunt excepturi!</p>
-        </div>
+  <br>
+  <div class='row'>
 
-    </div>
-</div>
-{{!-- image card layout --}}
- <div class="row">
-    <div class="col s12 m7">
-      <div class="card">
-        <div class="card-image">
-          <img src="images/sample-1.jpg">
-          <span class="card-title">Card Title</span>
-        </div>
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.
-          I am convenient because I require little markup to use effectively.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
+    <div class='col s12'>
+      <h6 class="center">Take your gaming out of the box.</h6>
+      <div class='row'>
+        <form id="gameSearchForm">
+          <div class="input-field col s8 offset-s2">
+            <input placeholder="Search for a game" id="gameSearchInput" type="text" class="validate center-align">
+          <menu></menu>
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col s10 offset-s1">
+          {{#each games}}
+          <div class="card">
+            <div class="card-image">
+              <img src="{{this.dataValues.image_url}}">
+            </div>
+            <div class="card-content">
+              <h4 class='cardTitle'>{{this.dataValues.names}}</h4> <span
+                class='cardText'>{{this.dataValues.min_players}} - {{this.dataValues.max_players}} players</span>
+              <p class='cardText flow-text'>Category: {{this.dataValues.category}}</p>
+              <div class='row'>
+                <button class='btn gameAddButton col s3' data-id="{{this.dataValues.id}}"><i
+                    class="fas fa-plus-circle"></i> Add</button>
+                <a href="/games/{{this.dataValues.id}}"><button class='btn toGamePage col s3 offset-s6' data-id="{{this.dataValues.id}}"><i
+                    class="fas fa-puzzle-piece"></i> See game page</button></a>
+
+              </div>
+
+            </div>
+          </div>
+          {{/each}}
         </div>
       </div>
+
     </div>
+
+
   </div>
+</div>

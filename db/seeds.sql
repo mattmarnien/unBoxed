@@ -1,0 +1,2 @@
+INSERT INTO users (username, password, firstname, lastname, email, city, state, onlinegaming) VALUES ('aranel', 'test', "Matthew", "Marnien", "mgm215@gmail.com", "Philadelphia", "PA", 1),
+('lantern2', 'darkestKnight', "John", "Stewart", "green@justice.org", "Philadelphia", "PA", 1), ('scottisscarn', 'password', "Michael", "Scott", "mscott@dundermifflin.com", "Scranton", "PA", 0), ('piper', '3541rc56', "Richard", "Hendrix", "rhendrix@hooli.com", "San Francisco", "CA", 1), ('notMusk', 'teslatomars', "Elon", "Musk", "musk@musk.musk", "Atlanta", "GA", 1)
