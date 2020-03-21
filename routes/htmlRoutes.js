@@ -4,16 +4,17 @@ const router = express.Router();
 const db = require("../models");
 const passport = require("passport");
 // html route file for page queries
-function isLoggedIn(req,res,next) {
-  if(req.isAuthenticated()){
-      return next();
+const avatarArray = [{ name: 'Blue Meeple', image: '/assets/images/blueMeeple.jpg' }, { name: 'Red Meeple', image: '/assets/images/redMeeple.jpg' }, { name: 'Yellow Meeple', image: '/assets/images/yellowMeeple.jpg' }, { name: 'Black Meeple', image: '/assets/images/blackMeeple.jpg' }, { name: 'Pink Meeple', image: '/assets/images/pinkMeeple.jpg' }, { name: 'Green Meeple', image: '/assets/images/greenMeeple.jpg' }, { name: 'Maple Meeple', image: '/assets/images/canadianMeeple.jpg' }]
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
   } else {
-      res.redirect("/login");
+    res.redirect("/login");
   }
 }
 
 // Create all our routes and set up logic within those routes where required.
-module.exports = function(router) {
+module.exports = function (router) {
   router.get("/", (req, res) => {
     db.Game.findAll({ limit: 30 }).then(data => {
 
@@ -35,7 +36,7 @@ module.exports = function(router) {
     console.log(req.body);
     db.Game.findOne({
       where: {
-        names: req.body.name
+        name: req.body.name
       }
     }).then(data => {
 
@@ -67,12 +68,22 @@ module.exports = function(router) {
   });
 
   router.get("/signup", (req, res) => {
-    res.render("signUp");
+    let avatarObj = { meeple: avatarArray }
+    res.render("signUp", avatarObj);
   });
 
   router.get("/user", isLoggedIn, (req, res) => {
-    db.User.findOne({ where: { id: req.session.passport.user }, Include: [db.Game] }).then(thisUser => {  
-      console.log(thisUser)    
+    db.User.findOne({
+      where: { id: req.session.passport.user }, include: [{
+        model: db.Game,
+        as: 'games',
+        required: false,
+        attributes: ['id', 'name', 'image_url', 'min_players', 'max_players', 'category'],
+
+      }]
+    }).then(thisUser => {
+  
+     
       res.render("user", thisUser);
     });
 
@@ -89,7 +100,7 @@ module.exports = function(router) {
   //====log out== route===
 
   router.get("/logout", (req, res) => {
-    req.session.destroy(function(err) {
+    req.session.destroy(function (err) {
       console.log("Logging Out");
       req.logout();
       res.clearCookie("user_sid");

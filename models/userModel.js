@@ -44,8 +44,19 @@ module.exports = function(sequelize, DataTypes) {
     },
     zipcode: {
       type: DataTypes.INTEGER(5),
-      allowNull: true,
+      allowNull: false,
       default: 11111
+    },
+    avatar: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      default: "/assets/images/blueMeeple.jpg"
+    },
+    bio: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      default: "Tell people about yourself",
+
     },
     createdAt: {
       allowNull: true,

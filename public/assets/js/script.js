@@ -1,5 +1,22 @@
 // Front end script
 
+//////////
+//Global Functions
+///
+
+function makeAlertText(alertDiv, alertMessage, alertType){
+  alertDiv.empty();
+  let alertText;
+  if(alertType === 'alert'){
+   alertText = $("<p class='alertText'>");
+  }
+  else{
+     alertText = $("<p class='updatedText'>");
+  }
+  alertText.text(alertMessage)
+  alertDiv.append(alertText);
+}
+
 
 /////////
 //Login Script
@@ -155,19 +172,41 @@ const signUpLastname = $("#signUpLastname");
 const signUpUsername = $("#signUpUsername");
 const signUpPassword = $("#signUpPassword");
 const signUpConfirmPassword = $("#signUpConfirmPassword");
+const signUpCity = $("#signUpCity");
+const signUpState = $("#signUpState");
+const signUpZip = $("#signUpZip");
+const signUpOnlineCheck = $(".onlineGamingCheck");
 const signUpButton = $("#signUpBtn");
 const signUpForm = $("#signUpForm");
+const avatarSelect = $("#avatarSelect");
+const avatarSelectImage = $("#avatarSelectImage");
+let avatarVal = "/assets/images/blueMeeple.jpg"
 
 function getUserInfo() {
+  let online =0;
+  if(signUpOnlineCheck.checked){
+    online = 1;
+  }
   let user = {
     email: signUpEmail.val().trim(),
     firstname: signUpFirstname.val().trim(),
     lastname: signUpLastname.val().trim(),
     username: signUpUsername.val().trim(),
     password: signUpPassword.val().trim(),
+    city: signUpCity.val().trim(),
+    state: signUpState.val().trim(),
+    zipcode:  signUpZip.val().trim(),
+    avatar: avatarVal,
+    onlineGaming: online
   };
   return user;
 }
+
+avatarSelect.on("change", function(event){
+  avatarSelectImage.attr('src', event.target.value);
+  avatarVal = event.target.value;
+})
+
 
 signUpForm.on("submit", event => {
   event.preventDefault();
@@ -183,6 +222,7 @@ signUpButton.on("click", event => {
       data: newUser
     }).then(() => {
       console.log(newUser.firstname + " " + newUser.lastname + " has been added to the database.")
+      window.location = "/";
     })
   }
   else {
@@ -207,7 +247,7 @@ function generateGroupPage(matchArr){
     matchUserName.text(matchArr[i].username);
     let gamesStr = ''
     for(let j = 0; j < matchArr[i].games.length; j++){
-      gamesStr += matchArr[i].games[j].names; 
+      gamesStr += matchArr[i].games[j].name; 
       gamesStr += '\n'
     }
     matchUserGames.text(gamesStr);
@@ -274,6 +314,32 @@ lfgSelect.on("change", event => {
 
   }
 })
+
+
+///////////
+//User page scripts
+///
+const bioText = $(".bioText");
+const userBioAlertDiv = $(".userBioAlertDiv")
+
+bioText.on("focusout", function(event){
+  updatedText = bioText.text();
+  console.log("changed");
+  console.log(updatedText);
+
+  $.ajax({
+    method: "PUT",
+    url: "/api/users",
+    data: {bio: updatedText}
+  }).then(data => {
+    let message = "Bio Text Updated";
+    makeAlertText(userBioAlertDiv, message, 'update')
+
+  })
+
+})
+
+
     
 
 

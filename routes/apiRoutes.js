@@ -30,7 +30,9 @@ module.exports = function (router) {
             lastname: req.body.lastname,
             password: db.User.generateHash(req.body.password),
             city: req.body.city,
-            state: req.body.state
+            state: req.body.state,
+            zipcode: req.body.zipcode,
+            avatar: req.body.avatar
 
         }).then(data => {
             console.log("New user added")
@@ -60,27 +62,45 @@ module.exports = function (router) {
     })
 
 
-    router.put("api/users/:id", isLoggedIn, (req, res) => {
-
-        db.User.update({
-            username: req.body.username,
-            email: req.body.email,
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            password: req.body.password,
-            city: req.body.city,
-            state: req.body.state
-        },
-            {
-                where: {
-                    id: req.sessions.passport.user
-                }
-            }).then(data => {
+    router.put("/api/users", isLoggedIn, (req, res) => {
+        let changeObj = {};
+        console.log(req.body);
+        if(req.body.firstname) {
+            changeObj.firstname = req.body.firstname;
+        }
+        if(req.body.email) {
+            changeObj.email = req.body.email;
+        }
+        if(req.body.lastname) {
+            changeObj.lastname = req.body.lastname;
+        }
+        if(req.body.password) {
+            changeObj.password = db.User.generateHash(req.body.password);
+        }
+        if(req.body.city) {
+            changeObj.city = req.body.city;
+        }
+        if(req.body.state) {
+            changeObj.state = req.body.state;
+        }
+        if(req.body.zipcode) {
+            changeObj.zipcode = req.body.zipcode;
+        }
+        if(req.body.avatar) {
+            changeObj.avatar = req.body.avatar;
+        }
+        if(req.body.onlineGaming) {
+            changeObj.onlineGaming = req.body.onlineGaming;
+        }
+        if(req.body.bio) {
+            changeObj.bio = req.body.bio;
+        }
+        db.User.update(changeObj,{where:{id: req.session.passport.user}}).then(data => {
                 res.json(data);
             });
     });
 
-    router.delete("/api/users/:id", isLoggedIn, (req, res) => {
+    router.delete("/api/users", isLoggedIn, (req, res) => {
 
         db.User.destroy({ where: { id: req.user.id } }).then(data => {
             res.end();
@@ -110,7 +130,7 @@ module.exports = function (router) {
                 model: db.Game,
                 as: 'games',
                 required: false,
-                attributes: ['id', 'names'],
+                attributes: ['id', 'name'],
 
             }]
         }).then(data => {
@@ -122,7 +142,7 @@ module.exports = function (router) {
                     model: db.Game,
                     as: 'games',
                     required: true,
-                    attributes: ['id', 'names'],
+                    attributes: ['id', 'name'],
                 }]
             }).then(thisUser => {
                 console.log(group)

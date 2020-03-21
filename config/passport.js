@@ -24,7 +24,7 @@ module.exports = function (passport) {
 
                 if (!user) {
                     console.log("no user found");
-                    return done(null, false, req.flash('loginMessage', 'No user found.'));
+                    return done(null, false);
                 }
 
 
