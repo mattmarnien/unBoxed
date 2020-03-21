@@ -195,8 +195,28 @@ signUpButton.on("click", event => {
 ///
 
 const lfgSelect = $("#groupTypeSelect");
+const matchArr = [];
+const matchDiv = $("#matchDiv");
 
+function generateGroupPage(matchArr){
+  console.log("generationg")
+  for(let i = 0; i < matchArr.length; i++){
+    let matchUserDiv = $("<div class='gameCard col s4'>");
+    let matchUserName = $("<h5>");
+    let matchUserGames = $("<p>")
+    matchUserName.text(matchArr[i].username);
+    let gamesStr = ''
+    for(let j = 0; j < matchArr[i].games.length; j++){
+      gamesStr += matchArr[i].games[j].names; 
+      gamesStr += '\n'
+    }
+    matchUserGames.text(gamesStr);
+    matchDiv.append(matchUserDiv);
+    matchUserDiv.append(matchUserName, matchUserGames);
 
+  }
+
+}
 
 lfgSelect.on("change", event => {
   let choice = event.target.value
@@ -209,46 +229,52 @@ lfgSelect.on("change", event => {
         if (data.redirect) {
             window.location.href = data.redirect;
         } else {
-      console.log(data);      
-      let matchArr = [];   
-      for (let i = 0; i < 3;) {
+      console.log(data);
+      let hasGamesArr = data.group.filter(user => user.games.length)  
+      console.log(hasGamesArr);    
+      matchArr.length = 0;
+      let count = 0;  
+      for (let i = 0; i < hasGamesArr.length;) {
+        count++;
         let alreadyPresent = false;
-        let hasGames = false;
         let gamesinCommon = false;
-        let randoCalrissian = Math.floor(Math.random() * data.group.length);
+        let randoCalrissian = Math.floor(Math.random() * hasGamesArr.length);
         for(let j = 0; j<matchArr.length; j ++){
-         if(matchArr[j].id === data.group[randoCalrissian].id){         
+         if(matchArr[j].id === hasGamesArr[randoCalrissian].id){         
          alreadyPresent = true;
          }
-         if(data.group[randoCalrissian].games){
-           hasGames = true
-         }
-         if(hasGames){
+        
          for(let g = 0; g < data.group[randoCalrissian].games.length; g ++){
-           if(data.thisUser.games.include(data.group[randoCalrissian].games[m])){
+           if(data.thisUser.games.include(hasGamesArr[randoCalrissian].games[m])){
              gamesinCommon = true;
            }
          }
-         }
+         
         }
 
-        if(!alreadyPresent && hasGames && gamesinCommon){
-          matchArr.push(data.group[randoCalrissian]);
-          i++;          
-        }   
+        if(!alreadyPresent && gamesinCommon){
+          matchArr.push(hasGamesArr[randoCalrissian]);
+          i++;
+             
         }
-        
+        else if(count > hasGamesArr.length *2){
+          matchArr.push(hasGamesArr[randoCalrissian]);
+          i++;
+                }   
+        }
+        generateGroupPage(matchArr);
       }
-      console.log(matchArr)
     
     }
   })
+ 
 }
   
   if (choice == 2) {
 
   }
 })
+    
 
 
 

@@ -115,12 +115,16 @@ module.exports = function (router) {
             }]
         }).then(data => {
             let group = data;
-            db.User.findOne({ where: { id: req.session.passport.user }, Include: [
-                {model: db.Game,
-                as: 'games',
-                required: false,
-                attributes: ['id', 'names']}]
-             }).then(thisUser => {
+            db.User.findOne({
+
+                where: { id: req.session.passport.user },
+                include: [{
+                    model: db.Game,
+                    as: 'games',
+                    required: true,
+                    attributes: ['id', 'names'],
+                }]
+            }).then(thisUser => {
                 console.log(group)
                 console.log(thisUser)
                 let returnObj = { group, thisUser }
