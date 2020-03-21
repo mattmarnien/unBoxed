@@ -35,21 +35,48 @@ loginForm.on("submit", event => {
 ///
 const gameSearch = $("#gameSearchInput");
 const gameSearchForm = $("#gameSearchForm");
-const gameAddButton = $();
+const gameAddButton = $(".gameAddButton");
 const gamePageButton = $(".toGamePage");
 
 gameSearchForm.on("submit", event => {
   event.preventDefault();
-  let search = gameSearch.val().trim()
+  let search = {name: gameSearch.val().trim()}
   console.log("search!!!!!!!", search);
   $.ajax({
-    method: "GET",
-    url: window.location = "/search/" + search
+    method: "POST",
+    url: "/search",
+    data: search
   }).then(data => {
-    console.log("!!!!!!!!!", data)
+    window.location = "/games/" + data.id;
   });
 
 });
+
+
+//function to add game on game add button that works both in Index and on Game Page
+$(".gameAddButton").on("click", function(event){
+
+  thisGame = $(this).data("id");
+  addedGameObj = {game: thisGame};
+  console.log(addedGameObj);
+  $.ajax({
+    method: "POST",
+    url: "/api/users/games/",
+    data: addedGameObj,
+    success: function(data) {
+      if (data.redirect) {
+          // data.redirect contains the string URL to redirect to
+          window.location.href = data.redirect;
+      } else {
+          // data.form contains the HTML for the replacement form
+          console.log('game added')
+      }
+  }
+
+})
+})
+
+
 
 //////////
 //Game Page Script
@@ -108,7 +135,7 @@ description.on("click", function (event) {
     method: "GET",
     url: queryUrl
   }).then(data => {
-    console.log(data)
+    
     generateDescription(data)
     
   })
@@ -164,24 +191,6 @@ signUpButton.on("click", event => {
 })
 
 //////////
-//Add game scripts
-////
-const addButton = $(".addGameButton");
-
-addButton.on("click", function (event) {
-  game = $(this).data('id');
-  $.ajax({
-    method: "POST",
-    url: "/api/users/:id",
-    data: game
-  }).then(() => {
-
-  })
-
-})
-
-
-//////////
 //LFG Scripts
 ///
 
@@ -195,32 +204,46 @@ lfgSelect.on("change", event => {
   if (choice == 1) {
     $.ajax({
       method: "GET",
-      url: "/api/users/group"
-    }).then(data => {
-      
-      let matchArr = [];      
+      url: "/api/users/group",
+      success: function(data) {
+        if (data.redirect) {
+            window.location.href = data.redirect;
+        } else {
+      console.log(data);      
+      let matchArr = [];   
       for (let i = 0; i < 3;) {
         let alreadyPresent = false;
-        let randoCalrissian = Math.floor(Math.random() * data.length);
+        let hasGames = false;
+        let gamesinCommon = false;
+        let randoCalrissian = Math.floor(Math.random() * data.group.length);
         for(let j = 0; j<matchArr.length; j ++){
-         if(matchArr[j].id === data[randoCalrissian].id){         
+         if(matchArr[j].id === data.group[randoCalrissian].id){         
          alreadyPresent = true;
          }
+         if(data.group[randoCalrissian].games){
+           hasGames = true
+         }
+         if(hasGames){
+         for(let g = 0; g < data.group[randoCalrissian].games.length; g ++){
+           if(data.thisUser.games.include(data.group[randoCalrissian].games[m])){
+             gamesinCommon = true;
+           }
+         }
+         }
         }
-        if(alreadyPresent === false){
-          for(let k = 0; k < data[randoCalrissian].games.length; k ++){
 
-          }   
-          
-          if(data[randoCalrissian].games)
-          matchArr.push(data[randoCalrissian]);
+        if(!alreadyPresent && hasGames && gamesinCommon){
+          matchArr.push(data.group[randoCalrissian]);
           i++;          
         }   
         }
-        console.log(matchArr)
-      })
+        
+      }
+      console.log(matchArr)
     
     }
+  })
+}
   
   if (choice == 2) {
 
@@ -238,5 +261,6 @@ lfgSelect.on("change", event => {
 document.addEventListener('DOMContentLoaded', function () {
   var elems = document.querySelectorAll('.sidenav');
   var instances = M.Sidenav.init(elems);
+  $('select').formSelect();
 });
 

@@ -27,7 +27,22 @@ body {
   color: black;
 }
 .cardText{
-  font-size: medium;
+  font-size: small;
+}
+
+.indexCard{
+  height: 600px;
+  margin: 5px;
+  line-height: 1.9;
+
+}
+
+.cardContent {
+ height: 220px;
+}
+
+.gameCardImage{
+  height: 300px;
 }
 .gameAddButton{
   background-color: #87c58c ;
