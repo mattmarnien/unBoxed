@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 {{!-- general page styling handlebars --}}
 <html lang="en">
+
 <head>
+
 <link rel="icon" 
       type="image/png" 
       href="/assets/images/uBFavicon.png">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     {{!-- materialize css and our custom css --}}
@@ -37,18 +40,62 @@
   </ul>
         
 
+  <link rel="icon" type="image/png" href="/assets/images/uBFavicon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{!-- materialize css and our custom css --}}
+  <link href="https://fonts.googleapis.com/css?family=Maven+Pro&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+  <title>unBoxed</title>
+</head>
+
+<body>
+  {{!-- main nav bar --}}
+  <nav>
+    <nav>
+      <div class="nav-wrapper blue-grey darken-2" id="mainNav">
+        <a href='#' data-target="mobileNav" class="sidenav-trigger"><i
+            class="fas fa-chess-rook fa-4x mobileIcon"></i></a>
+        <a href="/" class="brand-logo center"><img src="/assets/images/unBoxedLogo2.png" alt="unBoxed Logo"
+            id="mainLogo"></a>
+        <ul id="mainNavLinks" class="right hide-on-med-and-down navLinks">
+          <li><a class="navLinks" href="/lfg">LFG</a></li>
+          <li><a class="navLinks" href="/signup">New User </a></li>
+          {{!-- toggle  --}}
+          {{#if this.dataValues.username}}
+          <li><a class="navLinks" href="/logout">Log out</a></li>
+          {{else}}
+          <li><a class="navLinks" href="/login"> Sign In</a></li>
+          {{/if}}
+          <li><a class="navLinks" href="/user">Account</a></li>
+        </ul>
+      </div>
+    </nav>
+    {{!-- mobile only nav --}}
+    <ul class="sidenav" id="mobileNav">
+      <li><a class="navLinks" href="/lfg">LFG</a></li>
+      {{!-- toggle --}}
+      {{#if this.dataValues.username}}
+      <li><a class="navLinks" href="/logout">Log Out</a></li>
+      {{else}}
+      <li><a class="navLinks" href="/signup">New User</a></li>
+      {{/if}}
+      <li><a class="navLinks" href="/user/1">Account</a></li>
+    </ul>
+
+
+
 
 
 
     {{{body}}}
 
 
-  
-
-   
 
 
-  
+
+
 
 {{!-- materialize js, fontawesome,moment, jQuery, and our js linked --}}
 <script
@@ -57,9 +104,15 @@
   crossorigin="anonymous"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js">
  </script>
+
 <script src="https://kit.fontawesome.com/bf437d7780.js" crossorigin="anonymous"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>            
 <script src="/assets/js/script.js"></script>
+
+
+
+
+   
 </body>
 
 </html>
