@@ -15,7 +15,7 @@ VII. About the Author (#author)
 
 ## Installation
 
-No instalation required. The site can be found at unboxedgaming@herokuapp.com
+No instalation required. The site can be found at https://unboxedgaming.herokuapp.com/
 
 ## Usage
 
