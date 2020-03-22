@@ -12,10 +12,17 @@ function isLoggedIn(req, res, next) {
     res.redirect("/login");
   }
 }
+function indexLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    return next();
+  }
+}
 
 // Create all our routes and set up logic within those routes where required.
 module.exports = function (router) {
-  router.get("/", (req, res) => {
+  router.get("/", indexLoggedIn, (req, res) => {
     db.Game.findAll({ limit: 30 }).then(data => {
 
       let allGamesObject = {
@@ -93,9 +100,6 @@ module.exports = function (router) {
     res.render("pleaseLogin");
   });
 
-  router.get("/addgames", (req, res) => {
-    res.render("userAddGame");
-  });
 
   //====log out== route===
 

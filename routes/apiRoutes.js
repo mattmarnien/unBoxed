@@ -45,7 +45,7 @@ module.exports = function (router) {
 
         db.Game.findOne({
             where: {
-                names: req.body.name
+                name: req.body.name
             }
         }).then(data => {
 
