@@ -1,5 +1,5 @@
 {
-  "name": "watchtheshow",
+  "name": "unboxed",
   "version": "1.0.0",
   "description": "A site for boardgame enthusiasts to discover games and other players",
   "main": "server.js",
@@ -9,17 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mattmarnien/watchTheShow.git"
+    "url": "git+https://github.com/mattmarnien/unBoxed.git"
   },
   "keywords": [],
   "author": "Matthew Marnien, Steven Lam, Jon Butler",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mattmarnien/watchTheShow/issues"
+    "url": "https://github.com/mattmarnien/unBoxed/issues"
   },
-  "homepage": "https://github.com/mattmarnien/watchTheShow#readme",
+  "homepage": "https://github.com/mattmarnien/unBoxed#readme",
   "dependencies": {
     "axios": "^0.19.2",
+    "express-handlebars": "^3.1.0",
     "bcrypt": "^4.0.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
@@ -34,7 +35,7 @@
     "sequelize": "^5.21.5"
   },
   "devDependencies": {
-    "express-handlebars": "^3.1.0",
+    
     "nodemon": "^2.0.2"
   }
 }
