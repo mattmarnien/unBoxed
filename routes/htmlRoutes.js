@@ -89,8 +89,7 @@ module.exports = function (router) {
 
       }]
     }).then(thisUser => {
-  
-     
+
       res.render("user", thisUser);
     });
 
@@ -110,6 +109,14 @@ module.exports = function (router) {
       res.clearCookie("user_sid");
       res.clearCookie("username");
       res.render("logout");
+    });
+  });
+
+  router.get("/game/rand", (req, res) => {
+    console.log("Getting random game.")
+    let random = Math.floor((Math.random() * 4994) + 1);
+    db.Game.findOne({ where: { id: random } }).then(data => {
+      res.render("game", data);
     });
   });
 };
