@@ -6,7 +6,7 @@ const passport = require("passport");
 // html route file for page queries
 
 // Create all our routes and set up logic within those routes where required.
-module.exports = function(router) {
+module.exports = function (router) {
   router.get("/", (req, res) => {
     db.Game.findAll({ limit: 10 }).then(data => {
       let allGamesObject = {
@@ -62,13 +62,21 @@ module.exports = function(router) {
     res.render("signUp");
   });
 
-  router.get("/user", (req, res) => {
-    let thisUser = req.session.passport.user;
-    db.User.findOne({ where: { id: thisUser }, Include: [db.Game] }).then(
-      thisUser => {
-        res.render("user", thisUser);
-      }
-    );
+  router.get("/user", isLoggedIn, (req, res) => {
+    db.User.findOne({
+      where: { id: req.session.passport.user }, include: [{
+        model: db.Game,
+        as: 'games',
+        required: false,
+        attributes: ['id', 'name', 'image_url', 'min_players', 'max_players', 'category'],
+
+      }]
+    }).then(thisUser => {
+
+
+      res.render("user", thisUser);
+    });
+
   });
 
   router.get("/authfailed", (req, res) => {
@@ -82,12 +90,20 @@ module.exports = function(router) {
   //====log out== route===
 
   router.get("/logout", (req, res) => {
-    req.session.destroy(function(err) {
+    req.session.destroy(function (err) {
       console.log("Logging Out");
       req.logout();
       res.clearCookie("user_sid");
       res.clearCookie("username");
       res.render("logout");
+    });
+  });
+
+  router.get("/game/rand", (req, res) => {
+    console.log("Getting random game.")
+    let random = Math.floor((Math.random() * 4994) + 1);
+    db.Game.findOne({ where: { id: random } }).then(data => {
+      res.render("game", data);
     });
   });
 };

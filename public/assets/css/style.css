@@ -46,12 +46,22 @@ body {
 /* Login Styling */
 #loginBtn{
   background-color:  #87c58c;
+  margin-right:9px;
 }
 
 
 /* Singup styling */
 #signUpBtn{
   background-color: #87c58c;
+}
+
+#signUpPageBtn{
+  background-color:#87c58c;
+}
+
+#avatarSelectCard{
+  height: 300px;
+  width: 200px;
 }
 
 
