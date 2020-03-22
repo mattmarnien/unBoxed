@@ -54,8 +54,8 @@ module.exports = function (router) {
         });
     })
 
-    router.get("/api/games", (req, res) => {
-        db.Game.findAll({ limit: 10 }).then(data => {
+    router.get("/api/game", (req, res) => {
+        db.Game.findOne({ where: { id: req.body.id } }).then(data => {
 
 
             res.send(data);
@@ -206,19 +206,20 @@ module.exports = function (router) {
     })
 
 
-
-    router.get("/ziptest", (req, res) => {
-
-        queryUrl = 'https://www.zipcodeapi.com/rest/oJLRhMuL9yJQzaex4D33D27kVYS0eTrjGbtYHOVVrpsxZ1Ekv3w6HblE5JcmmGdI/distance.json/' + 19007 + '/' + 19107 + '/mile';
-
-        axios.get(queryUrl).then(data => {
-            res.send(data.data);
+    router.get("/api/recommendation/:id", isLoggedIn, (req, res) => {
+        db.User.findAll({  
+            where: {id: { [Op.ne]: req.session.passport.user }},     
+            include: [{
+                model: db.Game,
+                as: 'games',
+                required: false,
+                attributes: ['id', 'name', 'image_url'],
+            }]
+        }).then(data => {
+            res.json(data);
         })
 
-
     })
-
-
 
 }
 

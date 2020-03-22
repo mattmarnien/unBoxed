@@ -3,11 +3,11 @@
     <div class='row'>
         <form>
 
-            <div class="input-field col s4 offset-s4">
+            <div class="input-field col s4 offset-s4" id="reccomendSelectDiv">
                 <h5> What is your favorite game?</h5>
                 <select id="favoriteGameSelect">
                     <option value="" disabled selected>Choose your option</option>
-                    {{#each games}}
+                    {{#each user.games}}
                     <option value="{{this.dataValues.id}}">{{this.dataValues.name}}</option>
                     {{/each}}
 
@@ -21,3 +21,4 @@
 
     </div>
 </div>
+

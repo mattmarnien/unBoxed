@@ -132,7 +132,8 @@ module.exports = function (router) {
 
       }]
     }).then(thisUser => {
-      res.render("user", thisUser);
+      thisUserObj = { user: thisUser }
+      res.render("user", thisUserObj);
     });
   });
 
@@ -145,7 +146,8 @@ module.exports = function (router) {
         attributes: ['id', 'name', 'image_url', 'min_players', 'max_players', 'category'],
       }]
     }).then(thatUser => {
-      res.render("otherUser", thatUser);
+      thatUserObj = { user: thatUser }
+      res.render("otherUser", thatUserObj);
     });
 
   });
@@ -185,4 +187,23 @@ module.exports = function (router) {
       res.render("game", dataObject);
     });
   });
+
+  router.get('/rec', isLoggedInRequired, (req, res) => {
+    db.User.findOne({
+      where: { id: req.user }, include: [{
+        model: db.Game,
+        as: 'games',
+        required: false,
+        attributes: ['id', 'name', 'image_url', 'min_players', 'max_players', 'category'],
+      }]
+    }).then(data => {
+      console.log(data);
+      let userObj = { user: data }
+      res.render('recommendation', userObj);
+    })
+
+
+  });
+
 };
+

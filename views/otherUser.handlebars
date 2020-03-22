@@ -9,23 +9,23 @@
                 <div class="card userCard">
 
                     <div class="card-image">
-                        <img src={{this.dataValues.avatar}}>
+                        <img src={{this.user.dataValues.avatar}}>
                     </div>
                     <div class="card-content">
-                        <p class="card-title userCardUsername">{{this.dataValues.username}}</p>
+                        <p class="card-title userCardUsername">{{this.user.dataValues.username}}</p>
                     </div>
                 </div>
             </div>
 
             <div class='col s12 m8 card bioCard'>
                 <h2> User Bio</h2>
-                <p class='bioText'>{{this.dataValues.bio}}</p>
+                <p class='bioText'>{{this.user.dataValues.bio}}</p>
             </div>
 
         </div>
         <div class="row">
             <h4 class='col s12 center'> User Library </h4>
-            {{#each games}}
+            {{#each user.games}}
             <div class='cardHolder col l4 m6 s12'>
                 <div class="card indexCard">
                     <div class="card-image">
