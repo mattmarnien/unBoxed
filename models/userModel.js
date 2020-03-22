@@ -39,8 +39,8 @@ module.exports = function(sequelize, DataTypes) {
     
     onlinegaming: {
       type: DataTypes.BOOLEAN,
-      allowNull: true,
-      default: true
+      allowNull: false,
+      default: false
     },
     zipcode: {
       type: DataTypes.INTEGER(5),
@@ -54,7 +54,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     bio: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
       default: "Tell people about yourself",
 
     },
