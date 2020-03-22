@@ -8,8 +8,6 @@ const { Op } = require("sequelize");
 // routes for api calls across unBoxed
 const db = require('../models')
 
-
-
 module.exports = function (router) {
 
     function isLoggedIn(req, res, next) {
@@ -22,6 +20,7 @@ module.exports = function (router) {
     }
 
     router.post("/api/signup", (req, res) => {
+
 
         db.User.create({
             username: req.body.username,
@@ -38,6 +37,7 @@ module.exports = function (router) {
             console.log("New user added")
             res.json(data);
         })
+
     });
     ;
 
@@ -65,39 +65,41 @@ module.exports = function (router) {
     router.put("/api/users", isLoggedIn, (req, res) => {
         let changeObj = {};
         console.log(req.body);
-        if(req.body.firstname) {
+
+        if (req.body.firstname) {
             changeObj.firstname = req.body.firstname;
         }
-        if(req.body.email) {
+        if (req.body.email) {
             changeObj.email = req.body.email;
         }
-        if(req.body.lastname) {
+        if (req.body.lastname) {
             changeObj.lastname = req.body.lastname;
         }
-        if(req.body.password) {
+        if (req.body.password) {
             changeObj.password = db.User.generateHash(req.body.password);
         }
-        if(req.body.city) {
+        if (req.body.city) {
             changeObj.city = req.body.city;
         }
-        if(req.body.state) {
+        if (req.body.state) {
             changeObj.state = req.body.state;
         }
-        if(req.body.zipcode) {
+        if (req.body.zipcode) {
             changeObj.zipcode = req.body.zipcode;
         }
-        if(req.body.avatar) {
+        if (req.body.avatar) {
             changeObj.avatar = req.body.avatar;
         }
-        if(req.body.onlineGaming) {
+        if (req.body.onlineGaming) {
             changeObj.onlineGaming = req.body.onlineGaming;
         }
-        if(req.body.bio) {
+        if (req.body.bio) {
             changeObj.bio = req.body.bio;
         }
-        db.User.update(changeObj,{where:{id: req.session.passport.user}}).then(data => {
-                res.json(data);
-            });
+        db.User.update(changeObj, { where: { id: req.session.passport.user } }).then(data => {
+            res.json(data);
+        });
+
     });
 
     router.delete("/api/users", isLoggedIn, (req, res) => {
@@ -130,7 +132,9 @@ module.exports = function (router) {
                 model: db.Game,
                 as: 'games',
                 required: false,
+
                 attributes: ['id', 'name'],
+
 
             }]
         }).then(data => {
