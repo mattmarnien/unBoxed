@@ -31,7 +31,8 @@ module.exports = function (router) {
             city: req.body.city,
             state: req.body.state,
             zipcode: req.body.zipcode,
-            avatar: req.body.avatar
+            avatar: req.body.avatar,
+            onlineGaming: req.body.online
 
         }).then(data => {
             console.log("New user added")
@@ -45,7 +46,7 @@ module.exports = function (router) {
 
         db.Game.findOne({
             where: {
-                names: req.body.name
+                name: req.body.name
             }
         }).then(data => {
 
@@ -119,7 +120,7 @@ module.exports = function (router) {
 
     });
 
-    router.get("/api/users/group", isLoggedIn, (req, res) => {
+    router.get("/api/users/onlinegroup", isLoggedIn, (req, res) => {
         console.log(req.session.passport.user)
         db.User.findAll({
             where: {
@@ -160,12 +161,64 @@ module.exports = function (router) {
 
         })
     })
+    router.get("/api/users/irlgroup", isLoggedIn, (req, res) => {
+        db.User.findAll({
+            where: { id: { [Op.ne]: req.session.passport.user } },
+            include: [{
+                model: db.Game,
+                as: 'games',
+                required: false,
+                attributes: ['id', 'name'],
+            }]
+        }).then(data => {
+            let group = data;
+            db.User.findOne({
 
-    router.get("/search"), async (req, res) => {
-        db.Game.findAll({
-            where: {
-                na
-            }
+                where: { id: req.session.passport.user },
+                include: [{
+                    model: db.Game,
+                    as: 'games',
+                    required: true,
+                    attributes: ['id', 'name'],
+                }]
+            }).then(thisUser => {
+
+                let thisUserZip = thisUser.zipcode;
+                let hasGamesArr = group.filter(user => user.games.length);
+                for (let i = 0; i < hasGamesArr.length; i++) {
+                    queryUrl = 'https://www.zipcodeapi.com/rest/oJLRhMuL9yJQzaex4D33D27kVYS0eTrjGbtYHOVVrpsxZ1Ekv3w6HblE5JcmmGdI/distance.json/' + thisUserZip + '/' + hasGamesArr[i].dataValues.zipcode + '/mile';
+
+                    axios.get(queryUrl).then(data => {
+                        hasGamesArr[i].dataValues.distance = data.distance;
+                        let hasGamesCloseArr = hasGamesArr.filter(user => user.dataValues.distance <= 30)
+                        let returnObj = { hasGamesCloseArr, thisUser }
+
+                        // if (!data.length) {
+                        //     res.status(204);
+                        // }
+                        res.send(returnObj);
+                    })
+                }
+
+            })
+
         })
-    }
+    })
+
+
+
+    router.get("/ziptest", (req, res) => {
+
+        queryUrl = 'https://www.zipcodeapi.com/rest/oJLRhMuL9yJQzaex4D33D27kVYS0eTrjGbtYHOVVrpsxZ1Ekv3w6HblE5JcmmGdI/distance.json/' + 19007 + '/' + 19107 + '/mile';
+
+        axios.get(queryUrl).then(data => {
+            res.send(data.data);
+        })
+
+
+    })
+
+
+
 }
+

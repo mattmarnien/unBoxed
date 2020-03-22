@@ -238,24 +238,29 @@ const lfgSelect = $("#groupTypeSelect");
 const matchArr = [];
 const matchDiv = $("#matchDiv");
 
-function generateGroupPage(matchArr){
-  console.log("generationg")
+function generateGroupPage(matchArr){ 
   for(let i = 0; i < matchArr.length; i++){
-    let matchUserDiv = $("<div class='gameCard col s4'>");
+    let matchHolderDiv = $("<div class='cardHolder col l4 m6 s12'>");
+    let matchUserDiv = $("<div class='card groupCard gameCard'>");
+    let matchUserImage = $("<img class='card-image gameCardImage'>");
     let matchUserName = $("<h5>");
-    let matchUserGames = $("<p>")
+    let matchUserGames = $("<p>");
+    let cardActionDiv = $("<div class='card-action'>");
+    let thisUserLink = $(`<a href='/user/${matchArr[i].id}' target='_blank'>`)
+    thisUserLink.text("Check their profile");    
     matchUserName.text(matchArr[i].username);
+    matchUserImage.attr('src', matchArr[i].avatar);
     let gamesStr = ''
     for(let j = 0; j < matchArr[i].games.length; j++){
       gamesStr += matchArr[i].games[j].name; 
       gamesStr += '\n'
     }
     matchUserGames.text(gamesStr);
-    matchDiv.append(matchUserDiv);
-    matchUserDiv.append(matchUserName, matchUserGames);
-
+    matchDiv.append(matchHolderDiv);
+    matchHolderDiv.append(matchUserDiv);
+    cardActionDiv.append(thisUserLink);
+    matchUserDiv.append(matchUserImage, matchUserName, matchUserGames, cardActionDiv);
   }
-
 }
 
 lfgSelect.on("change", event => {
@@ -264,7 +269,7 @@ lfgSelect.on("change", event => {
   if (choice == 1) {
     $.ajax({
       method: "GET",
-      url: "/api/users/group",
+      url: "/api/users/onlinegroup",
       success: function(data) {
         if (data.redirect) {
             window.location.href = data.redirect;
@@ -284,8 +289,8 @@ lfgSelect.on("change", event => {
          alreadyPresent = true;
          }
         
-         for(let g = 0; g < data.group[randoCalrissian].games.length; g ++){
-           if(data.thisUser.games.include(hasGamesArr[randoCalrissian].games[m])){
+         for(let g = 0; g < hasGamesArr[randoCalrissian].games.length; g ++){
+           if(data.thisUser.games.includes(hasGamesArr[randoCalrissian].games[g])){
              gamesinCommon = true;
            }
          }
@@ -297,7 +302,7 @@ lfgSelect.on("change", event => {
           i++;
              
         }
-        else if(count > hasGamesArr.length *2){
+        else if(count > hasGamesArr.length *2 && !alreadyPresent){
           matchArr.push(hasGamesArr[randoCalrissian]);
           i++;
                 }   
@@ -311,6 +316,53 @@ lfgSelect.on("change", event => {
 }
   
   if (choice == 2) {
+    $.ajax({
+      method: "GET",
+      url: "/api/users/irlgroup",
+      success: function(data) {
+        if (data.redirect) {
+            window.location.href = data.redirect;
+        } else {
+      console.log(data);
+      let hasGamesCloseArr = data.hasGamesCloseArr;   
+      console.log(hasGamesCloseArr);    
+      matchArr.length = 0;
+      let count = 0;  
+      for (let i = 0; i < hasGamesCloseArr.length;) {
+        count++;
+        let alreadyPresent = false;
+        let gamesinCommon = false;
+        let randoCalrissian = Math.floor(Math.random() * hasGamesCloseArr.length);
+        for(let j = 0; j<matchArr.length; j ++){
+         if(matchArr[j].id === hasGamesCloseArr[randoCalrissian].id){         
+         alreadyPresent = true;
+         }
+        
+         for(let g = 0; g < hasGamesCloseArr[randoCalrissian].games.length; g ++){
+           if(data.thisUser.games.includes(hasGamesCloseArr[randoCalrissian].games[g])){
+             gamesinCommon = true;
+           }
+         }
+         
+        }
+
+        if(!alreadyPresent && gamesinCommon){
+          matchArr.push(hasGamesCloseArr[randoCalrissian]);
+          i++;
+             
+        }
+        else if(count > hasGamesCloseArr.length *2 && !alreadyPresent){
+          matchArr.push(hasGamesCloseArr[randoCalrissian]);
+          i++;
+                }   
+        }
+        generateGroupPage(matchArr);
+      }
+    
+    }
+  })
+
+
 
   }
 })
@@ -343,7 +395,15 @@ bioText.on("focusout", function(event){
     
 
 
-
+/////////
+//Infinite Scroll Scripts
+//
+$('.indexContainer').infiniteScroll({
+  // options
+  path: '/page/{{#}}',
+  append: '.cardFeed',
+  history: 'push'
+});
 
 /////////////
 //Materialize Scripts
