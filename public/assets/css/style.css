@@ -64,8 +64,13 @@ body {
 .toGamePage:hover{
   background-color:#87c58c ;
 }
-
-
+.gameDeleteButton{
+  background-color:tomato;
+}
+.gameDeleteButton:hover{
+  background-color:red;
+}
+ 
 /* Login Styling */
 #loginBtn{
   background-color:  #87c58c;
@@ -146,7 +151,7 @@ body {
   }
   #infoDiv{
     line-height: 1;
-    padding-bottom: 15px;    
+    padding-bottom: 21px;    
   }
 
   /* User page styling */
@@ -166,6 +171,14 @@ body {
     width: auto;
   }
 
+  #userLib{
+    height: 70px;  
+    color:#87c58c;
+}
+
+hr{
+  border: 1px solid black;
+}
 /* LFG styling */
 
 .groupCard {

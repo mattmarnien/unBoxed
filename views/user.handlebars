@@ -22,18 +22,21 @@
                 </div>
             </div>
 
-        <div class='col s12 m8 card bioCard'>
-            <h2> User Bio</h2>
-            <p class='bioText' contenteditable="true">{{this.user.dataValues.bio}}</p>
-            <div class='userBioAlertDiv'>
+            <div class='col s12 m8 card bioCard'>
+                <h2> User Bio</h2>
+                <hr>
+                <p class='bioText' contenteditable="true">{{this.dataValues.bio}}</p>
+                <div class='userBioAlertDiv'>
 
+                </div>
             </div>
-        </div>
 
         </div>
         <div class="row">
-            <h4 class='col s12 center'> User Library </h4>
-            {{#each user.games}}
+            <div class="nav-wrapper blue-grey darken-2" id="userLib">
+                <h4 class='col s12 center'> User Library </h4>
+            </div>
+            {{#each games}}
             <div class='cardHolder col l4 m6 s12'>
                 <div class="card indexCard">
                     <div class="card-image">
@@ -46,9 +49,10 @@
                         <p class='cardText flow-text'>Category: {{this.dataValues.category}}</p>
 
                     </div>
-                    <div class='row right'>
-
-                        <a href="/games/{{this.dataValues.id}}"><button class='btn toGamePage col s6'
+                    <div class='row'>
+                        <button class='btn gameDeleteButton col s3 offset-s2' data-id="{{this.dataValues.id}}"><i
+                                class="fas fa-minus-circle"></i>Oust</button>
+                        <a href="/games/{{this.dataValues.id}}"><button class='btn toGamePage col s3 offset-s1'
                                 data-id="{{this.dataValues.id}}"><i class="fas fa-puzzle-piece"></i> Info</button></a>
 
                     </div>
