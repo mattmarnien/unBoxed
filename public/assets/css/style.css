@@ -69,12 +69,18 @@ body {
 /* Login Styling */
 #loginBtn{
   background-color:  #87c58c;
+  margin-right:9px;
 }
 
 
 /* Singup styling */
 #signUpBtn{
   background-color: #87c58c;
+}
+
+
+#signUpPageBtn{
+  background-color:#87c58c;
 }
 
 #avatarSelectCard{
@@ -160,11 +166,11 @@ body {
     width: auto;
   }
 
-  /* test styling */
-  .addGamesImage{
-    height: 100px;
-    width: 150px;
-  }
+/* LFG styling */
+
+.groupCard {
+  width: 300px;
+}
   
 
   @media (max-width: 576px){

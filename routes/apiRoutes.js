@@ -8,8 +8,6 @@ const { Op } = require("sequelize");
 // routes for api calls across unBoxed
 const db = require('../models')
 
-
-
 module.exports = function (router) {
 
     function isLoggedIn(req, res, next) {
@@ -23,6 +21,7 @@ module.exports = function (router) {
 
     router.post("/api/signup", (req, res) => {
 
+
         db.User.create({
             username: req.body.username,
             email: req.body.email,
@@ -32,12 +31,14 @@ module.exports = function (router) {
             city: req.body.city,
             state: req.body.state,
             zipcode: req.body.zipcode,
-            avatar: req.body.avatar
+            avatar: req.body.avatar,
+            onlineGaming: req.body.online
 
         }).then(data => {
             console.log("New user added")
             res.json(data);
         })
+
     });
     ;
 
@@ -45,7 +46,7 @@ module.exports = function (router) {
 
         db.Game.findOne({
             where: {
-                names: req.body.name
+                name: req.body.name
             }
         }).then(data => {
 
@@ -65,39 +66,41 @@ module.exports = function (router) {
     router.put("/api/users", isLoggedIn, (req, res) => {
         let changeObj = {};
         console.log(req.body);
-        if(req.body.firstname) {
+
+        if (req.body.firstname) {
             changeObj.firstname = req.body.firstname;
         }
-        if(req.body.email) {
+        if (req.body.email) {
             changeObj.email = req.body.email;
         }
-        if(req.body.lastname) {
+        if (req.body.lastname) {
             changeObj.lastname = req.body.lastname;
         }
-        if(req.body.password) {
+        if (req.body.password) {
             changeObj.password = db.User.generateHash(req.body.password);
         }
-        if(req.body.city) {
+        if (req.body.city) {
             changeObj.city = req.body.city;
         }
-        if(req.body.state) {
+        if (req.body.state) {
             changeObj.state = req.body.state;
         }
-        if(req.body.zipcode) {
+        if (req.body.zipcode) {
             changeObj.zipcode = req.body.zipcode;
         }
-        if(req.body.avatar) {
+        if (req.body.avatar) {
             changeObj.avatar = req.body.avatar;
         }
-        if(req.body.onlineGaming) {
+        if (req.body.onlineGaming) {
             changeObj.onlineGaming = req.body.onlineGaming;
         }
-        if(req.body.bio) {
+        if (req.body.bio) {
             changeObj.bio = req.body.bio;
         }
-        db.User.update(changeObj,{where:{id: req.session.passport.user}}).then(data => {
-                res.json(data);
-            });
+        db.User.update(changeObj, { where: { id: req.session.passport.user } }).then(data => {
+            res.json(data);
+        });
+
     });
 
     router.delete("/api/users", isLoggedIn, (req, res) => {
@@ -117,7 +120,7 @@ module.exports = function (router) {
 
     });
 
-    router.get("/api/users/group", isLoggedIn, (req, res) => {
+    router.get("/api/users/onlinegroup", isLoggedIn, (req, res) => {
         console.log(req.session.passport.user)
         db.User.findAll({
             where: {
@@ -130,7 +133,9 @@ module.exports = function (router) {
                 model: db.Game,
                 as: 'games',
                 required: false,
+
                 attributes: ['id', 'name'],
+
 
             }]
         }).then(data => {
@@ -156,12 +161,64 @@ module.exports = function (router) {
 
         })
     })
+    router.get("/api/users/irlgroup", isLoggedIn, (req, res) => {
+        db.User.findAll({
+            where: { id: { [Op.ne]: req.session.passport.user } },
+            include: [{
+                model: db.Game,
+                as: 'games',
+                required: false,
+                attributes: ['id', 'name'],
+            }]
+        }).then(data => {
+            let group = data;
+            db.User.findOne({
 
-    router.get("/search"), async (req, res) => {
-        db.Game.findAll({
-            where: {
-                na
-            }
+                where: { id: req.session.passport.user },
+                include: [{
+                    model: db.Game,
+                    as: 'games',
+                    required: true,
+                    attributes: ['id', 'name'],
+                }]
+            }).then(thisUser => {
+
+                let thisUserZip = thisUser.zipcode;
+                let hasGamesArr = group.filter(user => user.games.length);
+                for (let i = 0; i < hasGamesArr.length; i++) {
+                    queryUrl = 'https://www.zipcodeapi.com/rest/oJLRhMuL9yJQzaex4D33D27kVYS0eTrjGbtYHOVVrpsxZ1Ekv3w6HblE5JcmmGdI/distance.json/' + thisUserZip + '/' + hasGamesArr[i].dataValues.zipcode + '/mile';
+
+                    axios.get(queryUrl).then(data => {
+                        hasGamesArr[i].dataValues.distance = data.distance;
+                        let hasGamesCloseArr = hasGamesArr.filter(user => user.dataValues.distance <= 30)
+                        let returnObj = { hasGamesCloseArr, thisUser }
+
+                        // if (!data.length) {
+                        //     res.status(204);
+                        // }
+                        res.send(returnObj);
+                    })
+                }
+
+            })
+
         })
-    }
+    })
+
+
+
+    router.get("/ziptest", (req, res) => {
+
+        queryUrl = 'https://www.zipcodeapi.com/rest/oJLRhMuL9yJQzaex4D33D27kVYS0eTrjGbtYHOVVrpsxZ1Ekv3w6HblE5JcmmGdI/distance.json/' + 19007 + '/' + 19107 + '/mile';
+
+        axios.get(queryUrl).then(data => {
+            res.send(data.data);
+        })
+
+
+    })
+
+
+
 }
+
