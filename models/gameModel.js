@@ -3,7 +3,7 @@ var db = require("../models")
 module.exports = function (sequelize, DataTypes) {
     var Game = sequelize.define("Game", {
         // Giving the Author model a name of type STRING
-        ranks: {
+        rank: {
             type: DataTypes.INTEGER,
             allowNull: true
         },
@@ -15,7 +15,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: true
         },
-        names: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false
         },

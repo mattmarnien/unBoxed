@@ -4,27 +4,60 @@
 <div class='container'>
     <div class='row'>
         <div class="row">
-            <div class="col s3">
-                <div class="card">
+            <div class="col s4">
+                <div class="card userCard">
 
                     <div class="card-image">
-                        <img src="/assets/images/defaultAvatar.png">
-
-                        <p class="card-title userCardUsername">{{this.dataValues.username}}</p>
+                        <img src={{this.dataValues.avatar}}>
                         <a class="btn-floating halfway-fab waves-effect waves-light editUser"><i
                                 class="fas fa-user-edit"></i></a>
                     </div>
                     <div class="card-content">
+                        <p class="card-title userCardUsername">{{this.dataValues.username}}</p>
                         <p>{{this.dataValues.firstname}} {{this.dataValues.lastname}}</p>
                         <p>{{this.dataValues.email}}</p>
-                        <p>Location: {{this.dataValues.location}}</p>
+                        <p>{{this.dataValues.city}}, {{this.dataValues.state}}</p>
                     </div>
+                    <a id="deleteUserLink" href="/deleteuser">Delete</a>
                 </div>
             </div>
-            <div class='col s8 userLibraryDiv'>
 
+        <div class='col s12 m8 card bioCard'>
+            <h2> User Bio</h2>
+            <p class='bioText' contenteditable="true">{{this.dataValues.bio}}</p>
+            <div class='userBioAlertDiv'>
 
             </div>
         </div>
+
+        </div>
+        <div class="row">
+            <h4 class='col s12 center'> User Library </h4>
+            {{#each games}}
+            <div class='cardHolder col l4 m6 s12'>
+                <div class="card indexCard">
+                    <div class="card-image">
+                        <img class="gameCardImage" src="{{this.dataValues.image_url}}">
+                    </div>
+                    <div class="card-content row cardContent">
+                        <h5 class='cardTitle'>{{this.dataValues.name}}</h5> <span
+                            class='cardText'>{{this.dataValues.min_players}} - {{this.dataValues.max_players}}
+                            players</span>
+                        <p class='cardText flow-text'>Category: {{this.dataValues.category}}</p>
+
+                    </div>
+                    <div class='row right'>
+
+                        <a href="/games/{{this.dataValues.id}}"><button class='btn toGamePage col s6'
+                                data-id="{{this.dataValues.id}}"><i class="fas fa-puzzle-piece"></i> Info</button></a>
+
+                    </div>
+
+                </div>
+            </div>
+            {{/each}}
+        </div>
     </div>
+
+
 </div>

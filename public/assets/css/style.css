@@ -5,6 +5,14 @@ body {
     font-family: 'Maven Pro', sans-serif;
 }
 
+.alertText{
+  color: red;
+}
+
+.updatedText{
+  color: #98da9e;
+}
+
 
 /* main styling */
 #mainNav{
@@ -27,7 +35,22 @@ body {
   color: black;
 }
 .cardText{
-  font-size: medium;
+  font-size: small;
+}
+
+.indexCard{
+  height: 600px;
+  margin: 5px;
+  line-height: 1.9;
+
+}
+
+.cardContent {
+ height: 220px;
+}
+
+.gameCardImage{
+  height: 300px;
 }
 .gameAddButton{
   background-color: #87c58c ;
@@ -54,6 +77,7 @@ body {
 #signUpBtn{
   background-color: #87c58c;
 }
+
 
 #signUpPageBtn{
   background-color:#87c58c;
@@ -126,11 +150,20 @@ body {
   }
 
   /* User page styling */
+.userCard{
+  font-size: medium;
+  line-height: 2;
+}
+
   .userCardUsername{
     color: black !important;
-    position: relative;
-    bottom: -50px !important;
-    left: 10px !important;
+  }
+
+  .bioCard{
+    background-color: #70a3b7;
+    display: inline-block !important;
+    height: auto;
+    width: auto;
   }
 
   /* test styling */

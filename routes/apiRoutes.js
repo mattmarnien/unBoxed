@@ -3,37 +3,24 @@ const router = express.Router();
 const axios = require('axios').default;
 var passport = require('passport');
 const bcrypt = require('bcrypt')
+const { Op } = require("sequelize");
 
 // routes for api calls across unBoxed
 const db = require('../models')
+
 module.exports = function (router) {
+
+    function isLoggedIn(req, res, next) {
+        if (req.isAuthenticated()) {
+            return next();
+        } else {
+            data = { redirect: "/login" }
+            res.json(data)
+        }
+    }
+
     router.post("/api/signup", (req, res) => {
-<<<<<<< Updated upstream
 
-        const authId = "4dfe4ca2-e094-16cf-b3ac-79c826357f87";
-        const authToken = "a6Z90FIoqCoEkPGGZOWs"
-        let queryUrl = "https://us-zipcode.api.smartystreets.com/lookup?auth-id=" + authId + "&auth-token=" + authToken + "&city=" + req.body.city + "&state=" + req.body.state;
-        console.log(queryUrl)
-
-        axios.get(queryUrl, {
-            method: "GET"
-        }).then(zipData => {
-            let zip = zipData.data[0].zipcodes[0].zipcode;
-            db.User.create({
-                username: req.body.username,
-                email: req.body.email,
-                firstname: req.body.firstname,
-                lastname: req.body.lastname,
-                password: db.User.generateHash(req.body.password),
-                city: req.body.city,
-                state: req.body.state,
-                zipcode: zip
-
-            }).then(data => {
-                console.log("New user added")
-                res.json(data);
-            })
-=======
 
         db.User.create({
             username: req.body.username,
@@ -50,6 +37,7 @@ module.exports = function (router) {
             console.log("New user added")
             res.json(data);
         })
+
     });
     ;
 
@@ -57,14 +45,13 @@ module.exports = function (router) {
 
         db.Game.findOne({
             where: {
-                name: req.body.name
+                names: req.body.name
             }
         }).then(data => {
 
             res.json(data);
->>>>>>> Stashed changes
         });
-    });
+    })
 
     router.get("/api/games", (req, res) => {
         db.Game.findAll({ limit: 10 }).then(data => {
@@ -78,6 +65,7 @@ module.exports = function (router) {
     router.put("/api/users", isLoggedIn, (req, res) => {
         let changeObj = {};
         console.log(req.body);
+
         if (req.body.firstname) {
             changeObj.firstname = req.body.firstname;
         }
@@ -111,39 +99,66 @@ module.exports = function (router) {
         db.User.update(changeObj, { where: { id: req.session.passport.user } }).then(data => {
             res.json(data);
         });
+
     });
 
-    router.delete("/api/users/:id", passport.authenticate('local'), (req, res) => {
+    router.delete("/api/users", isLoggedIn, (req, res) => {
+
         db.User.destroy({ where: { id: req.user.id } }).then(data => {
-            res.json(data);
+            res.end();
         });
     });
 
-    router.post("/api/users/games/", passport.authenticate('local'), (req, res) => {
-        console.log(req.user.id);
-        db.UserGame.create({ userId: req.user.id, gameId: req.body.id })
+    router.post("/api/users/games/", isLoggedIn, (req, res) => {
+        console.log(req.body)
+        console.log(req.session)
+        db.UserGame.create({ userId: req.session.passport.user, gameId: req.body.game }).then(data => {
+
+            res.json(data);
+        })
 
     });
 
-    router.get("/api/users/group", (req, res) => {
+    router.get("/api/users/group", isLoggedIn, (req, res) => {
+        console.log(req.session.passport.user)
         db.User.findAll({
             where: {
-                onlineGaming: 1
+                [Op.and]: {
+                    id: { [Op.ne]: req.session.passport.user },
+                    onlineGaming: 1
+                }
             },
             include: [{
                 model: db.Game,
                 as: 'games',
                 required: false,
-                attributes: ['id', 'names'],
+
+                attributes: ['id', 'name'],
+
 
             }]
         }).then(data => {
-            if (!data.length) {
-                res.status(204);
-            }
-            res.send(data);
-        })
+            let group = data;
+            db.User.findOne({
 
+                where: { id: req.session.passport.user },
+                include: [{
+                    model: db.Game,
+                    as: 'games',
+                    required: true,
+                    attributes: ['id', 'name'],
+                }]
+            }).then(thisUser => {
+                console.log(group)
+                console.log(thisUser)
+                let returnObj = { group, thisUser }
+                if (!data.length) {
+                    res.status(204);
+                }
+                res.send(returnObj);
+            })
+
+        })
     })
 
     router.get("/search"), async (req, res) => {
