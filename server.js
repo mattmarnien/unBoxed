@@ -49,7 +49,7 @@ require("./routes/apiRoutes")(app, passport);
 require("./routes/htmlRoutes")(app, passport);
 
 
-var syncOptions = { force: true };
+var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
