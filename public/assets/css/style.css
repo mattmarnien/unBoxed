@@ -66,6 +66,7 @@ body {
 }
 
 
+
 /* Login Styling */
 #loginBtn{
   background-color:  #87c58c;
@@ -170,8 +171,41 @@ body {
 
 .groupCard {
   width: 300px;
+  height: 400px;
 }
-  
+
+/* Rec Page Styling */
+.recCard{
+  background-color: #70a3b7;
+    color: white;
+    line-height: 1.5;
+    width: 300px;
+}
+.recToGamePage{
+  background-color: #87c58c;
+}
+.recToGamePage:hover{
+  background-color: #70a3b7 ;
+}
+.recButton{
+  background-color: #87c58c ;
+}
+.recButton:hover {
+  background-color: #70a3b7 ;
+}
+.recCardImage{
+  height: 300px;
+  width: auto;
+}
+  /* auto fill attributes */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-animation: autofill 0s forwards;
+    animation: autofill 0s forwards;
+}
 
   @media (max-width: 576px){
    
@@ -185,15 +219,11 @@ body {
       font-size: small;
     }
 }
-/* auto fill attributes */
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    -webkit-animation: autofill 0s forwards;
-    animation: autofill 0s forwards;
-}
+
+
+
+
 
 @keyframes autofill {
     100% {

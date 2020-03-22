@@ -58,7 +58,6 @@ const gamePageButton = $(".toGamePage");
 gameSearchForm.on("submit", event => {
   event.preventDefault();
   let search = { name: gameSearch.val().trim() }
-  console.log("search!!!!!!!", search);
   $.ajax({
     method: "POST",
     url: "/search",
@@ -75,7 +74,7 @@ $(".gameAddButton").on("click", function (event) {
 
   thisGame = $(this).data("id");
   addedGameObj = { game: thisGame };
-  console.log(addedGameObj);
+
   $.ajax({
     method: "POST",
     url: "/api/users/games/",
@@ -86,7 +85,7 @@ $(".gameAddButton").on("click", function (event) {
         window.location.href = data.redirect;
       } else {
         // data.form contains the HTML for the replacement form
-        console.log('game added')
+      
       }
     }
 
@@ -131,20 +130,20 @@ redditComments.on("click", function (event) {
     method: "GET",
     url: queryUrl
   }).then(data => {
-    console.log(data)
+ 
     queryUrl = "https://www.boardgameatlas.com/api/game/reddit?limit=10&game_id=" + data.games[0].id + "&client_id=nmzLLgP0nr"
     $.ajax({
       method: "GET",
       url: queryUrl
     }).then(moreData => {
       generateRedditDiv(moreData)
-      console.log(moreData);
+    
     })
   })
 })
 
 description.on("click", function (event) {
-  console.log("click")
+
   let name = $(this).data('name');
   let queryUrl = "https://www.boardgameatlas.com/api/search?name=" + name + "&client_id=nmzLLgP0nr"
   $("#infoDiv").empty();
@@ -215,18 +214,18 @@ signUpButton.on("click", event => {
   event.preventDefault();
   if (signUpPassword.val().trim() === signUpConfirmPassword.val().trim()) {
     let newUser = getUserInfo();
-    console.log(newUser);
+    
     $.ajax({
       method: "POST",
       url: "/api/signup",
       data: newUser
     }).then(() => {
-      console.log(newUser.firstname + " " + newUser.lastname + " has been added to the database.")
+      
       window.location = "/";
     })
   }
   else {
-    console.log("Passwords do not match!")
+  
   }
 })
 
@@ -244,28 +243,21 @@ function generateGroupPage(matchArr) {
     let matchUserDiv = $("<div class='card groupCard gameCard'>");
     let matchUserImage = $("<img class='card-image gameCardImage'>");
     let matchUserName = $("<h5>");
-    let matchUserGames = $("<p>");
     let cardActionDiv = $("<div class='card-action'>");
     let thisUserLink = $(`<a href='/user/${matchArr[i].id}' target='_blank'>`)
     thisUserLink.text("Check their profile");
     matchUserName.text(matchArr[i].username);
     matchUserImage.attr('src', matchArr[i].avatar);
-    let gamesStr = ''
-    for (let j = 0; j < matchArr[i].games.length; j++) {
-      gamesStr += matchArr[i].games[j].name;
-      gamesStr += '\n'
-    }
-    matchUserGames.text(gamesStr);
     matchDiv.append(matchHolderDiv);
     matchHolderDiv.append(matchUserDiv);
     cardActionDiv.append(thisUserLink);
-    matchUserDiv.append(matchUserImage, matchUserName, matchUserGames, cardActionDiv);
+    matchUserDiv.append(matchUserImage, matchUserName, cardActionDiv);
   }
 }
 
 lfgSelect.on("change", event => {
   let choice = event.target.value
-  console.log(choice)
+
   if (choice == 1) {
     $.ajax({
       method: "GET",
@@ -274,9 +266,9 @@ lfgSelect.on("change", event => {
         if (data.redirect) {
           window.location.href = data.redirect;
         } else {
-          console.log(data);
+
           let hasGamesArr = data.group.filter(user => user.games.length)
-          console.log(hasGamesArr);
+
           matchArr.length = 0;
           let count = 0;
           for (let i = 0; i < hasGamesArr.length;) {
@@ -320,12 +312,13 @@ lfgSelect.on("change", event => {
       method: "GET",
       url: "/api/users/irlgroup",
       success: function (data) {
-        if (data.redirect) {
-          window.location.href = data.redirect;
+        console.log(data);
+        if (!data.hasGamesCloseArr.length) {
+          console.log("no nearby players");
         } else {
-          console.log(data);
+
           let hasGamesCloseArr = data.hasGamesCloseArr;
-          console.log(hasGamesCloseArr);
+
           matchArr.length = 0;
           let count = 0;
           for (let i = 0; i < hasGamesCloseArr.length;) {
@@ -376,8 +369,6 @@ const userBioAlertDiv = $(".userBioAlertDiv")
 
 bioText.on("focusout", function (event) {
   updatedText = bioText.text();
-  console.log("changed");
-  console.log(updatedText);
 
   $.ajax({
     method: "PUT",
@@ -397,7 +388,7 @@ bioText.on("focusout", function (event) {
 
 let chosenGame = {}
 function recommendGame(data, chosen) {
-  console.log(chosen);
+
   const sameGameUserArr = [];
   let recGame = {}
   for (let i = 0; i < data.length; i++) {
@@ -408,13 +399,13 @@ function recommendGame(data, chosen) {
     }
 
   }
-  if (sameGameUserArr.length) {    
-    console.log("games in common")
+  if (sameGameUserArr.length) {
+
     let randoUser = Math.floor(Math.random() * sameGameUserArr.length)
     let randoGame = Math.floor(Math.random() * sameGameUserArr[randoUser].games.length)
     recGame = sameGameUserArr[randoUser].games[randoGame];
-    console.log(recGame.id)
-    if(recGame.id == chosen) {      
+
+    if (recGame.id == chosen) {
       recGame = recommendGame(data, chosen);
       return recGame;
     }
@@ -422,21 +413,21 @@ function recommendGame(data, chosen) {
       return recGame;
     }
   }
-  else {   
-    console.log("no games in common") 
-      let randoUser = Math.floor(Math.random() * data.length)
-      let randoGame = Math.floor(Math.random() * data[randoUser].games.length)
-      recGame = data[randoUser].games[randoGame];
-      console.log(recGame);
-      if (recGame.id !== chosen) {
-        return recGame
-      }
-      else {
-        recGame = recommendGame(data, chosen);
-        return recGame
-      }
+  else {
 
-    
+    let randoUser = Math.floor(Math.random() * data.length)
+    let randoGame = Math.floor(Math.random() * data[randoUser].games.length)
+    recGame = data[randoUser].games[randoGame];
+
+    if (recGame.id !== chosen) {
+      return recGame
+    }
+    else {
+      recGame = recommendGame(data, chosen);
+      return recGame
+    }
+
+
   }
 
 
@@ -445,22 +436,22 @@ function recommendGame(data, chosen) {
 
 $("#favoriteGameSelect").on("change", event => {
   chosenGame = event.target.value;
-  $("#recommendDiv").empty();
 
+})
+
+$(".recButton").on("click", event => {
+  $("#recommendDiv").empty();
   $.ajax({
     Method: "GET",
     url: '/api/recommendation/' + chosenGame,
   }).then(data => {
-
-
     let recGame = recommendGame(data, chosenGame);
-    console.log(recGame);
-    let recCard = $("<div class='card gameCard'>")
+    let recCard = $("<div class='card recCard col s12 m6 offset-m3'>")
     let cardBody = $("<div class='row'>")
-    let secondRow = $("<div class='row card-action gameCard'>")
-    let recImage = $("<img class='card-image gameCardImage col s4'>")
-    let recTitle = $("<h4 class='col s8'>");
-    let recButton = $("<button class='btn-large gameAddButton'>")
+    let secondRow = $("<div class='row card-action'>")
+    let recImage = $("<img class='recCardImage'>")
+    let recTitle = $("<h4 class='col s12'>");
+    let recButton = $(`<button class='btn-large recToGamePage' data-id=${recGame.id}>`)
     let newIcon = $('<i class="fas fa-puzzle-piece">');
     recButton.html(newIcon);
     recButton.text("Info");
@@ -470,11 +461,12 @@ $("#favoriteGameSelect").on("change", event => {
     recCard.append(cardBody, secondRow);
     cardBody.append(recImage, recTitle);
     secondRow.append(recButton);
-
-
   })
-
 });
+
+$(document).on("click", ".recToGamePage", function(event){
+  window.location.href = '/games/' + $(this).data("id");
+})
 
 
 

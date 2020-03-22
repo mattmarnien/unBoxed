@@ -197,7 +197,6 @@ module.exports = function (router) {
         attributes: ['id', 'name', 'image_url', 'min_players', 'max_players', 'category'],
       }]
     }).then(data => {
-      console.log(data);
       let userObj = { user: data }
       res.render('recommendation', userObj);
     })
