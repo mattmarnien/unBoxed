@@ -109,8 +109,8 @@ module.exports = function (router) {
     });
 
     router.post("/api/users/games/", isLoggedIn, (req, res) => {
-        db.User.findOne({where : {id: req.session.passport.user}}.on('success', function(user) {
-            db.Game.findOne({where: {id: req.body.game}}).on('success', function(game){
+        db.User.findOne({where : {id: req.session.passport.user}}.then( function(user) {
+            db.Game.findOne({where: {id: req.body.game}}).then(function(game){
               user.setGames([game]);
             }); 
 
