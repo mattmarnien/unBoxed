@@ -147,7 +147,7 @@ body {
   }
   #infoDiv{
     line-height: 1;
-    padding-bottom: 15px;    
+    padding-bottom: 21px;    
   }
 
   /* User page styling */
@@ -165,6 +165,22 @@ body {
     display: inline-block !important;
     height: auto;
     width: auto;
+  }
+
+  #userLib{
+    height:70px;
+    color:#87c58c;
+  }
+
+  hr{
+    border:1px solid black;
+  }
+
+  .gameDeleteButton{
+    background-color:tomato;
+  }
+  .gameDeleteButton:hover{
+    background-color:red;
   }
 
 /* LFG styling */
