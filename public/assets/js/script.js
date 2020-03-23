@@ -80,13 +80,7 @@ $(".gameAddButton").on("click", function (event) {
     url: "/api/users/games/",
     data: addedGameObj,
     success: function (data) {
-      if (data.redirect) {
-        // data.redirect contains the string URL to redirect to
-        window.location.href = data.redirect;
-      } else {
-        // data.form contains the HTML for the replacement form
-      
-      }
+     console.log("success")
     }
 
   })
