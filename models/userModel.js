@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
     
     onlinegaming: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
       default: false
     },
     zipcode: {
