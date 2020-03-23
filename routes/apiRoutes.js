@@ -195,7 +195,7 @@ module.exports = function (router) {
                 let thisUserZip = thisUser.zipcode;
                 let hasGamesArr = group.filter(user => user.games.length);
                 for (let i = 0; i < hasGamesArr.length; i++) {
-                    queryUrl = 'https://www.zipcodeapi.com/rest/4XsAqsFatCRuIGSXVRcf299zSgIzDOUnNpTUMSdQ7rmovSiUxAkX08xzv6EJvbxs/distance.json/' + thisUserZip + '/' + hasGamesArr[i].dataValues.zipcode + '/mile';
+                    queryUrl = 'https://www.zipcodeapi.com/rest/5q6ubsVKpbj6rVavJtJmIV2m5GwMwtVXPEY8nWc33b5JML9KdbRPP1IiEcmLUdVy/distance.json/' + thisUserZip + '/' + hasGamesArr[i].dataValues.zipcode + '/mile';
                     
                     await axios.get(queryUrl).then(data => {
                         hasGamesArr[i].dataValues.distance = data.data.distance
