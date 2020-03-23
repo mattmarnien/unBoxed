@@ -26,23 +26,23 @@ function isLoggedInOptional(req, res, next) {
 // Create all our routes and set up logic within those routes where required.
 module.exports = function (router) {
   router.get("/", isLoggedInOptional, (req, res) => {
-    // db.Game.findAll({ limit: 30 }).then(data => {
-    //   let allGamesObject = {};
-    //   if (req.user) {
-    //     allGamesObject = {
-    //       user: req.session.passport.user,
-    //       games: data
-    //     };
-    //   }
-    //   else {
-    //     allGamesObject = {
-    //       games: data
-    //     };
-    //   }
+    db.Game.findAll({ limit: 30 }).then(data => {
+      let allGamesObject = {};
+      if (req.user) {
+        allGamesObject = {
+          user: req.session.passport.user,
+          games: data
+        };
+      }
+      else {
+        allGamesObject = {
+          games: data
+        };
+      }
 
-      res.render("index");
+      res.render("index", allGamesObject);
 
-    // });
+    });
   });
 
   router.get("/page/:pagenum", isLoggedInOptional, (req, res) => {
