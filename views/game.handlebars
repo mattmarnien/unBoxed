@@ -15,7 +15,8 @@
         <div class="col s7">
             <div class="card gameCard">
                 <div class="card-content white-text">
-                    <span>{{this.game.dataValues.year}} | {{this.game.dataValues.min_players}} - {{this.game.dataValues.max_players}}
+                    <span>{{this.game.dataValues.year}} | {{this.game.dataValues.min_players}} -
+                        {{this.game.dataValues.max_players}}
                         players | {{this.game.dataValues.avg_time}} minutes</span>
                     <p>
 
@@ -25,8 +26,13 @@
                     <p><strong>Average Rating: </strong> {{this.game.dataValues.avg_rating}}/10</p>
                 </div>
                 <div class="card-action">
-                    <a href="#" class='descriptionLink' data-name='{{this.game.dataValues.name}}'>Description</a>
-                    <a href="#" class='redditCommentLink' data-name='{{this.game.dataValues.name}}'>Reddit Says Things</a>
+                    <div class="col">
+                        <a href="#" class='descriptionLink' data-name='{{this.game.dataValues.name}}'>Description</a>
+                    </div>
+                    <div class="col">
+                        <a href="#" class='redditCommentLink' data-name='{{this.game.dataValues.name}}'>Reddit Says
+                            Things</a>
+                    </div>
                 </div>
                 <div id='infoDiv' class='container'>
 
