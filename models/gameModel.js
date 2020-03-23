@@ -92,16 +92,12 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true
         }, 
        
-    },
-    {
-        syncOnAssociation:false
     });
     Game.associate = (models) => {
         Game.belongsToMany(models.User, {
           through: 'userGames',
           as: 'users',
-          foreignKey: 'gameId',
-          syncOnAssociation:false
+          foreignKey: 'gameId'
         });
       };
    

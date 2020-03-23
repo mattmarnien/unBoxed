@@ -68,9 +68,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
      default: moment.now()
     }
-    },{
-      syncOnAssociation:false
-  });
+    });
 
     User.generateHash = function(password) {
       return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
@@ -84,7 +82,6 @@ module.exports = function(sequelize, DataTypes) {
         through: 'userGames',
         as: 'games',
         foreignKey: 'userId',
-        syncOnAssociation:false
       });
     };
   
