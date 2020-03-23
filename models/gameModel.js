@@ -101,6 +101,7 @@ module.exports = function (sequelize, DataTypes) {
           through: 'userGames',
           as: 'users',
           foreignKey: 'gameId',
+          syncOnAssociation:false
         });
       };
    

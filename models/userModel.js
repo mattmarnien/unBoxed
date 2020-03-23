@@ -84,6 +84,7 @@ module.exports = function(sequelize, DataTypes) {
         through: 'userGames',
         as: 'games',
         foreignKey: 'userId',
+        syncOnAssociation:false
       });
     };
   
