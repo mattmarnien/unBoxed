@@ -90,14 +90,17 @@ module.exports = function (sequelize, DataTypes) {
         updatedAt: {
             type: DataTypes.DATE,
             allowNull: true
-        }
+        }, 
        
+    },
+    {
+        syncOnAssociation:false
     });
     Game.associate = (models) => {
         Game.belongsToMany(models.User, {
           through: 'userGames',
           as: 'users',
-          foreignKey: 'gameId'
+          foreignKey: 'gameId',
         });
       };
    
