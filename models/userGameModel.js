@@ -1,22 +1,11 @@
 module.exports = function(sequelize, Datatypes) {
     const userGame = sequelize.define("UserGame", {
-        userId: {
-            type: Datatypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'Users',
-                key: 'id'
-            }
-        },
-        gameId: {
-            type: Datatypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'Games',
-                key: 'id'
-            }
+        hasIrl: {
+            type: Datatypes.BOOLEAN,
+            allowNull: true,            
         }
+       
     });
-    userGame.removeAttribute('id')
+
     return userGame;
   };
