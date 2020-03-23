@@ -155,6 +155,10 @@ $(document).on("click", event => {
   $("#infoDiv").empty();
 })
 
+$(".gameDeleteButton").on("click", event => {
+
+
+})
 
 /////////
 //Signup Page Script
@@ -232,6 +236,7 @@ const matchArr = [];
 const matchDiv = $("#matchDiv");
 
 function generateGroupPage(matchArr) {
+  matchDiv.empty();
   for (let i = 0; i < matchArr.length; i++) {
     let matchHolderDiv = $("<div class='cardHolder col l4 m6 s12'>");
     let matchUserDiv = $("<div class='card groupCard gameCard'>");
@@ -265,7 +270,7 @@ lfgSelect.on("change", event => {
 
           matchArr.length = 0;
           let count = 0;
-          for (let i = 0; i < hasGamesArr.length;) {
+          for (let i = 0; i < 5;) {
             count++;
             let alreadyPresent = false;
             let gamesinCommon = false;

@@ -108,6 +108,15 @@ module.exports = function (router) {
         });
     });
 
+    router.delete("/api/game/:id", isLoggedIn, (req,res) => {   
+        db.User.findOne({where : {id: req.session.passport.user}}).then( function(user) {
+        db.Game.findOne({where: {id: req.params.game}}).then(function(game){user.removeGames([game])
+        }).then(data => {
+            res.json(data);
+        })
+
+    })
+
     router.post("/api/users/games/", isLoggedIn, (req, res) => {
         db.User.findOne({where : {id: req.session.passport.user}}).then( function(user) {
             db.Game.findOne({where: {id: req.body.game}}).then(function(game){user.addGames([game])
