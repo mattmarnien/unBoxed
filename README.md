@@ -2,16 +2,17 @@
 
 unBoxed is a social board game site designed to provide information for gamers and help users find groups, online or irl, to play with.
 
+![Siteimage](public/assets/images/unBoxedMain.PNG)
+
 
 # Table of Contents
 
-I. [Instaltion](#installation)
-II. Usage (#usage)
-III. Licenses (#licenses)
-IV. Contributions (#contributions)
-V. Tests (#tests)
-VI. Questions (#questions)
-VII. About the Author (#author)
+I. [Installation](#installation)
+II. [Usage](#usage)
+III. [Licenses](#licenses)
+IV. [Contributions](#contributions)
+VI. [Questions](#questions)
+
 
 ## Installation
 
