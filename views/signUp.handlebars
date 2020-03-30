@@ -1,13 +1,16 @@
 <div class='container'>
   <h3 class='center'>Create an Account</h3>
+  <div class='center' id='signupAlertDiv'></div>  
   <div class="row">
     <form class="col s12" id="signUpForm">
       <div class="row">
         <div class="input-field unBoxInput col s6">
-          <input name="email" placeholder="Email" id="signUpEmail" type="email" />
+          <input name="email" placeholder="Email" id="signUpEmail" type="email" class='validate' required />
+           <span class="helper-text" data-error="Please enter an email adress"></span>
         </div>
         <div class="input-field unBoxInput col s6">
-          <input name="username" placeholder="Username" id="signUpUsername" type="text" />
+          <input name="username" placeholder="Username" id="signUpUsername" type="text" class='validate' required />
+          <span class="helper-text" data-error="Please enter a username"></span>
         </div>
       </div>
       <div class="row">
@@ -20,10 +23,12 @@
       </div>
       <div class="row">
         <div class="input-field unBoxInput col s6">
-          <input name="password" placeholder="Password" id="signUpPassword" type="password" />
+          <input name="password" placeholder="Password" id="signUpPassword" type="password" class='validate' required />
+          <span class="helper-text" data-error="Please make a password"></span>
         </div>
         <div class="input-field unBoxInput col s6">
-          <input name="confirmPassword" placeholder="Password" id="signUpConfirmPassword" type="password" />
+          <input name="confirmPassword" placeholder="Confirm Password" id="signUpConfirmPassword" type="password" class='validate' required />
+          <span class="helper-text" data-error="Please confirm your password"></span>
         </div>
       </div>
       <div class="row">
@@ -54,10 +59,10 @@
         </div>
         <div class="input-field unBoxInput col s6 offset-s1">
           <input name="zip" placeholder="Zip Code" id="signUpZip" type="text" />
-          <div class='row onlineGamingCheck'>
+          <div class='row'>
             <p class='col s9 offset-s1'>
       <label>
-        <input type="checkbox" />
+        <input type="checkbox" class='onlineGamingCheck'/>
         <span>Are you interested in an online group?</span>
       </label>
     </p>

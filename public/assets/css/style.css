@@ -124,6 +124,7 @@ body {
     border-bottom: 1px solid #87c58c !important;
 
   }
+  
   .unBoxInput input[type=text]::placeholder {
     color: #494848 !important;
    

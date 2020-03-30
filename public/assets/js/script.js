@@ -71,16 +71,18 @@ gameSearchForm.on("submit", event => {
 
 //function to add game on game add button that works both in Index and on Game Page
 $(".gameAddButton").on("click", function (event) {
+  console.log('clicked')
 
   thisGame = $(this).data("id");
   addedGameObj = { game: thisGame };
+  console.log(thisGame)
 
   $.ajax({
     method: "POST",
     url: "/api/users/games/",
     data: addedGameObj,
     success: function (data) {
-     console.log("success")
+      console.log("success")
     }
 
   })
@@ -124,14 +126,14 @@ redditComments.on("click", function (event) {
     method: "GET",
     url: queryUrl
   }).then(data => {
- 
+
     queryUrl = "https://www.boardgameatlas.com/api/game/reddit?limit=10&game_id=" + data.games[0].id + "&client_id=nmzLLgP0nr"
     $.ajax({
       method: "GET",
       url: queryUrl
     }).then(moreData => {
       generateRedditDiv(moreData)
-    
+
     })
   })
 })
@@ -177,13 +179,16 @@ const signUpButton = $("#signUpBtn");
 const signUpForm = $("#signUpForm");
 const avatarSelect = $("#avatarSelect");
 const avatarSelectImage = $("#avatarSelectImage");
-let avatarVal = "/assets/images/blueMeeple.jpg"
+const signupAlertDiv = $("#signupAlertDiv");
+let avatarVal = "/assets/images/blueMeeple.jpg";
 
 function getUserInfo() {
   let online = 0;
-  if (signUpOnlineCheck.checked) {
+  if (signUpOnlineCheck[0].checked) {
+    console.log("checked");
     online = 1;
   }
+
   let user = {
     email: signUpEmail.val().trim(),
     firstname: signUpFirstname.val().trim(),
@@ -204,27 +209,62 @@ avatarSelect.on("change", function (event) {
   avatarVal = event.target.value;
 })
 
+signUpOnlineCheck.on("change", event => {
+  console.log(signUpOnlineCheck)
+})
+
 
 signUpForm.on("submit", event => {
   event.preventDefault();
 })
+
+signUpEmail.on("focus", event => {
+  console.log('focused')
+  signUpEmail.css("border-bottom", '0px')
+})
 signUpButton.on("click", event => {
   event.preventDefault();
-  if (signUpPassword.val().trim() === signUpConfirmPassword.val().trim()) {
+
+  if ((/.+@.+\..+/.test(signUpEmail.val().trim())) === false) {
+    makeAlertText(signupAlertDiv, 'Please enter your email adress', 'alert')
+    return;
+  }
+  if(signUpUsername.val().trim().length < 6){
+    makeAlertText(signupAlertDiv, 'Please make your username at least 6 characters long', 'alert')
+    return;
+  }
+  if(signUpFirstname.val().trim().length < 1){
+    makeAlertText(signupAlertDiv, 'Please enter your first name', 'alert')
+    return;
+  }
+  if(signUpLastname.val().trim().length < 1){
+    makeAlertText(signupAlertDiv, 'Please enter your last name', 'alert')
+    return;
+  }
+  
+  if(signUpPassword.val().trim().length < 8){
+    makeAlertText(signupAlertDiv, 'Please make your password at least 8 characters long', 'alert')
+    return;
+  }
+ 
+  if(signUpPassword.val().trim() !== signUpConfirmPassword.val().trim()){
+    makeAlertText(signupAlertDiv, 'Passwords do not match', 'alert');
+    return;
+  }
+
+
     let newUser = getUserInfo();
-    
+
     $.ajax({
       method: "POST",
       url: "/api/signup",
       data: newUser
     }).then(() => {
-      
+
       window.location = "/";
     })
-  }
-  else {
   
-  }
+
 })
 
 //////////
@@ -463,7 +503,7 @@ $(".recButton").on("click", event => {
   })
 });
 
-$(document).on("click", ".recToGamePage", function(event){
+$(document).on("click", ".recToGamePage", function (event) {
   window.location.href = '/games/' + $(this).data("id");
 })
 
@@ -491,5 +531,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var elems = document.querySelectorAll('.sidenav');
   var instances = M.Sidenav.init(elems);
   $('select').formSelect();
+  M.updateTextFields();
 });
 

@@ -19,9 +19,7 @@ module.exports = function (router) {
         }
     }
 
-    router.post("/api/signup", (req, res) => {
-
-
+    router.post("/api/signup",  (req, res) => {
         db.User.create({
             username: req.body.username,
             email: req.body.email,
@@ -33,13 +31,16 @@ module.exports = function (router) {
             zipcode: req.body.zipcode,
             avatar: req.body.avatar,
             onlineGaming: req.body.online
-
-        }).then(data => {
-            res.json(data);
+        }).then(user => {
+            req.login(user, err => {
+                if(err) throw err;
+                res.json(user);
+            })
+           
         })
 
     });
-    ;
+    
 
     router.post("/search", (req, res) => {
 

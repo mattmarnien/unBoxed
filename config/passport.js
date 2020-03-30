@@ -30,6 +30,7 @@ module.exports = function (passport) {
 
 
                 if (user && !user.validPassword(password)) {
+                    console.log('incorrect password')
 
                     return done(null, false);
                 }
@@ -43,10 +44,10 @@ module.exports = function (passport) {
             });
 
         }));
+    
+        ;
 
-};
-
-
+}
 
 
 

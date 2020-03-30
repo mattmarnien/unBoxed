@@ -23,43 +23,33 @@ function isLoggedInOptional(req, res, next) {
   }
 }
 
+function getObject(name, req, data){
+  console.log(req)
+  let returnObj = {}
+  if (req.session.passport) {
+    returnObj.user = req.session.passport.user
+    returnObj[name] = data
+    }
+  
+  else {
+    returnObj[name] = data
+}
+return returnObj;
+}
+
 // Create all our routes and set up logic within those routes where required.
 module.exports = function (router) {
   router.get("/", isLoggedInOptional, (req, res) => {
     db.Game.findAll({ limit: 30 }).then(data => {
-      let allGamesObject = {};
-      if (req.user) {
-        allGamesObject = {
-          user: req.session.passport.user,
-          games: data
-        };
-      }
-      else {
-        allGamesObject = {
-          games: data
-        };
-      }
-
+      let allGamesObject = getObject('games', req, data);
       res.render("index", allGamesObject);
-
     });
   });
 
   router.get("/page/:pagenum", isLoggedInOptional, (req, res) => {
     let offset = 30 * req.params.pagenum;
     db.Game.findAll({ offset: offset, limit: 30 }).then(data => {
-      let allGamesObject = {};
-      if (req.user) {
-        allGamesObject = {
-          user: req.session.passport.user,
-          games: data
-        };
-      }
-      else {
-        allGamesObject = {
-          games: data
-        };
-      }
+      let allGamesObject = getObject('games', req, data);
       res.render("index", allGamesObject);
     });
   })
@@ -74,36 +64,14 @@ module.exports = function (router) {
         name: req.body.name
       }
     }).then(data => {
-      let gameObject = {};
-      if (req.user) {
-        gameObject = {
-          user: req.session.passport.user,
-          game: data
-        };
-      }
-      else {
-        gameObject = {
-          game: data
-        };
-      };
+      let gameObject = getObject(game, req, data);
       res.render("game", gameObject);
     });
   });
 
   router.get("/games/:id", isLoggedInOptional, (req, res) => {
     db.Game.findOne({ where: { id: req.params.id } }).then(data => {
-      let dataObject = {};
-      if (req.user) {
-        dataObject = {
-          user: req.session.passport.user,
-          game: data
-        };
-      }
-      else {
-        dataObject = {
-          game: data
-        };
-      }
+      let dataObject = getObject('game', req, data);
       res.render('game', dataObject);
     });
   });
@@ -129,7 +97,6 @@ module.exports = function (router) {
         as: 'games',
         required: false,
         attributes: ['id', 'name', 'image_url', 'min_players', 'max_players', 'category'],
-
       }]
     }).then(thisUser => {
       thisUserObj = { user: thisUser }
@@ -172,18 +139,7 @@ module.exports = function (router) {
     console.log("Getting random game.")
     let random = Math.floor((Math.random() * 4994) + 1);
     db.Game.findOne({ where: { id: random } }).then(data => {
-      let dataObject = {};
-      if (req.user) {
-        dataObject = {
-          user: req.session.passport.user,
-          game: data
-        };
-      }
-      else {
-        dataObject = {
-          game: data
-        };
-      }
+      let dataObject = getObject('game', req, data)
       res.render("game", dataObject);
     });
   });
